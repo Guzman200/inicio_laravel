@@ -1,0 +1,27 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: "Nunito", sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #337ab7; //primary
+$green: #5cb85c; //success
+$cyan: #cfe8f5; //info
+$yellow: #f0ad4e; //warning
+$red: #d9534f; //danger
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$orange: #f6993f;
+$teal: #d1ebd1; // bg-success apastelado
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    "teal":       $teal
+  ),
+  $theme-colors
+);

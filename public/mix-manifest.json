@@ -1,0 +1,10 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/categorias.js": "/js/categorias.js",
+    "/js/login.js": "/js/login.js",
+    "/js/materiales.js": "/js/materiales.js",
+    "/js/register.js": "/js/register.js",
+    "/js/transportadores.js": "/js/transportadores.js",
+    "/js/usuarios.js": "/js/usuarios.js"
+}
