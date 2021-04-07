@@ -27,7 +27,7 @@ class CrearEditar extends Component
         'nombres'              => 'required',
         'ap_paterno'           => 'required',
         'ap_materno'           => 'required',
-        'telefono'             => 'nullable',
+        'telefono'             => ['nullable','regex:/^[0-9]{10}$/'],
         'email'                => 'required|email',
     ];
 
@@ -37,6 +37,7 @@ class CrearEditar extends Component
         'ap_paterno.required'           => 'Es requerido',
         'ap_materno.required'           => 'Es requerido',
         'telefono.required'             => 'Es requerido',
+        'telefono.regex'                => 'El télefono debe contener 10 digitos',
         'email.required'                => 'Es requerido'
     ];
 

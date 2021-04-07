@@ -173,7 +173,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route('usuarios')}}" class="nav-link {{request()->is('usuarios') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Usuarios
                                     <span class="right badge badge-danger">New</span>

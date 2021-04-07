@@ -11,6 +11,9 @@
 
     <form autocomplete="off" id="form-transportadores">
 
+        {{-- Id transportador --}}
+        <input type="hidden" name="transportador_id" value="{{$transportador_id}}">
+
         {{-- Nombres --}}
         <div class="form-group row">
             <div class="col-sm-12">

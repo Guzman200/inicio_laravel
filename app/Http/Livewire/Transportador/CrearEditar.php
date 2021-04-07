@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Transportador;
 
 use App\Models\Transportador;
+use App\Rules\Transportador\StorePhoneRule;
+use App\Rules\Transportador\UpdatePhoneRule;
 use Livewire\Component;
 
 class CrearEditar extends Component
@@ -19,7 +21,7 @@ class CrearEditar extends Component
     protected $rules = [
         'nombres'   => 'required',
         'apellidos' => 'required',
-        'telefono'  => 'required',
+        'telefono'  => ['required','regex:/^[0-9]{10}$/'],
         'correo'    => 'required|email'
     ];
 
@@ -27,6 +29,7 @@ class CrearEditar extends Component
         'nombres.required'   => 'Es requerido',
         'apellidos.required' => 'Es requerido',
         'telefono.required'  => 'Es requerido',
+        'telefono.regex'     => 'El télefono debe contener 10 digitos',
         'correo.required'    => 'Es requerido'
     ];
 
@@ -37,14 +40,16 @@ class CrearEditar extends Component
 
     public function storeUpdate()
     {
-
-        sleep(5);
-        
+ 
         $this->validate($this->rules,$this->messages);
         
         $mensaje = "Transportador creado exitosamente.";
 
         if(is_null($this->transportador_id)){
+
+            $this->validate([
+                'telefono' => new StorePhoneRule(),
+            ]);
            
             Transportador::create([
                 'nombres'   => $this->nombres,
@@ -56,6 +61,11 @@ class CrearEditar extends Component
             $this->limpiarDatos();
 
         }else{
+
+            $this->validate([
+                'telefono' => new UpdatePhoneRule($this->transportador_id)
+            ]);
+
             // Actualizamos
             $transportador = Transportador::findOrFail($this->transportador_id);
             $transportador->nombres   = $this->nombres;
