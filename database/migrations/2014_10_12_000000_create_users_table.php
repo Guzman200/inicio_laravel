@@ -19,12 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('ap_paterno');
             $table->string('ap_materno');
             $table->string('email')->unique();
-            $table->string('telefono')->unique()->nullable();
-            $table->string('num_identificacion')->unique();
+            $table->string('telefono')->nullable()->default(NULL);
+            $table->string('nombre_usuario')->unique();
             $table->boolean('status')->default(false); 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('codigo_recuperacion')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

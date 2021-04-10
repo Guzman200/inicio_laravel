@@ -15019,7 +15019,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/test/resources/js/materiales.js */"./resources/js/materiales.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/materiales.js */"./resources/js/materiales.js");
 
 
 /***/ })

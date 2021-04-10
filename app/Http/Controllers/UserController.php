@@ -14,7 +14,7 @@ class UserController extends Controller
         if ($request->ajax()) {
 
             $usuarios = User::select([
-                'id', 'nombres', 'ap_paterno', 'ap_materno', 'telefono', 'email', 'status', 'num_identificacion',
+                'id', 'nombres', 'ap_paterno', 'ap_materno', 'telefono', 'email', 'status',
                 DB::raw("CONCAT(users.nombres,' ',users.ap_paterno,' ',users.ap_materno) as full_name")
             ]);
 

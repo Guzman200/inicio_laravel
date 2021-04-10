@@ -11,19 +11,12 @@
                     <form id="form-registro">
                         @csrf
 
-                        <div class="form-group">
-                           
-                            <label class="has-float-label">
-                                <input type="text" class="form-control hide-placeholder" name="num_identificacion" required autofocus autocomplete="off" placeholder="Identificación">
-                                <span>No. Identificación</span>
-                            </label>
-
-                        </div>
+                        
 
                         <div class="form-group">
                            
                             <label class="has-float-label">
-                                <input type="text" class="form-control hide-placeholder" name="nombres" required autocomplete="off" placeholder="Nombres">
+                                <input type="text" class="form-control hide-placeholder" name="nombres" required autofocus autocomplete="off" placeholder="Nombres">
                                 <span>Nombres</span>
                             </label>
 
@@ -61,6 +54,15 @@
                             <label class="has-float-label">
                                 <input id="email" type="email" class="form-control hide-placeholder" name="email" required autocomplete="email" placeholder="Email">
                                 <span>Email</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group">
+                           
+                            <label class="has-float-label">
+                                <input type="text" class="form-control hide-placeholder" name="nombre_usuario" required autocomplete="off" placeholder="Usuario">
+                                <span>Usuario</span>
                             </label>
 
                         </div>

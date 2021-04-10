@@ -87,8 +87,8 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        //$request["status"] = 1;
-        return $request->only('email', 'password');
+        $request["status"] = 1;
+        return $request->only(['nombre_usuario', 'password', 'status']);
     }
 
     /**
@@ -115,17 +115,17 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         // variables por default
-        $error = "Email o contraseña incorrecta";
+        $error = "Usuario o contraseña incorrecta";
         $title = null;
-        //$user = User::where('identification', $request->identification)->first();
+
+        $user = User::where('nombre_usuario', $request->nombre_usuario)->first();
 
         // si la cuenta se encuentra en status 0
-        /*
         if($user !=null && $user->status == 0){
             $error = "Esta cuenta fue desactivada, comuníquese con el administrador para mas información.";
             $title = "Cuenta desactivada";
         }
-        */
+        
         throw ValidationException::withMessages([
             "error" => $error,
             "title" => $title,
@@ -139,9 +139,6 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        //auth()->user()->sesion_id = null;
-        //auth()->user()->save();
-        
         $this->guard()->logout();
 
         $request->session()->invalidate();

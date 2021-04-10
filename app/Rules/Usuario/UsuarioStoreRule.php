@@ -4,17 +4,23 @@ namespace App\Rules\Usuario;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class PhoneRule implements Rule
+class UsuarioStoreRule implements Rule
 {
+
+    private $usuario_id;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(int $usuario_id)
     {
-        //
+        $this->usuario_id = $usuario_id;
     }
+
+
+    
 
     /**
      * Determine if the validation rule passes.
@@ -25,7 +31,7 @@ class PhoneRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        
     }
 
     /**

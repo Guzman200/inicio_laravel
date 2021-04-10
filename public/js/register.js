@@ -14968,6 +14968,11 @@ $(document).ready(function () {
         minlength: 5,
         maxlength: 255
       },
+      nombre_usuario: {
+        required: true,
+        minlength: 5,
+        maxlength: 255
+      },
       email: {
         required: true,
         minlength: 2,
@@ -14998,7 +15003,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/test/resources/js/login/register.js */"./resources/js/login/register.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/login/register.js */"./resources/js/login/register.js");
 
 
 /***/ })

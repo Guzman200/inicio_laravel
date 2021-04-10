@@ -48,7 +48,7 @@
     </div>
 
 
-    @yield('modales')
+    @yield('componentes_livewire')
 
 @endsection
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        
     }
 
     /**
@@ -24,5 +24,16 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function formato()
+    {
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('formato');
+        //$pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+
+        return view('formato');
     }
 }

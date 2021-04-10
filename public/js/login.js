@@ -14959,7 +14959,7 @@ $(document).ready(function () {
 
   formLogin.validate({
     rules: {
-      email: {
+      nombre_usuario: {
         required: true,
         minlength: 5,
         maxlength: 255
@@ -14982,7 +14982,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/test/resources/js/login/login.js */"./resources/js/login/login.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/login/login.js */"./resources/js/login/login.js");
 
 
 /***/ })

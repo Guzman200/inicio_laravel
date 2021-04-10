@@ -57,6 +57,11 @@ $(document).ready(() => {
                 minlength: 5,
                 maxlength: 255,
             },
+            nombre_usuario : {
+                required: true,
+                minlength: 5,
+                maxlength: 255,
+            },
 
             email: {
                 required: true,

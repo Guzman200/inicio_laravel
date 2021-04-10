@@ -15027,7 +15027,7 @@ var datatablesJSON = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/test/resources/js/categorias.js */"./resources/js/categorias.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/categorias.js */"./resources/js/categorias.js");
 
 
 /***/ })

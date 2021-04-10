@@ -14953,14 +14953,12 @@ $(document).ready(function () {
     }, {
       "data": "email"
     }, {
-      "data": "num_identificacion"
-    }, {
       "data": "status"
     }, {
       "defaultContent": ""
     }],
     "columnDefs": [{
-      "targets": 6,
+      "targets": 5,
       "render": function render(data, type, row) {
         return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_usuario='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_usuario='").concat(row.id, "' data-nombres='").concat(row.nombres, "'>Eliminar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-desactivar_usuario='").concat(row.id, "' \n                            data-nombres='").concat(row.nombres, "'>Cambiar estatus</a>\n                    </div>");
       }
@@ -15026,7 +15024,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/test/resources/js/usuarios.js */"./resources/js/usuarios.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/usuarios.js */"./resources/js/usuarios.js");
 
 
 /***/ })

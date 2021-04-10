@@ -2,43 +2,47 @@
 
 namespace App\Http\Livewire\Usuario;
 
+use App\Services\Usuario\CrearUsuario;
+use App\Services\Usuario\ModificarUsuario;
 use App\Models\User;
 use Exception;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class CrearEditar extends Component
 {
 
     public $usuario_id;
-    public $num_identificacion;
     public $nombres;
     public $ap_paterno;
     public $ap_materno;
     public $telefono;
     public $email;
+    public $nombre_usuario;
     public $password;
     public $password_confirmation;
 
     protected $listeners = ['editar', 'agregar', 'eliminar', 'storeUpdate', 'cambiarStatus'];
 
     protected $rules = [
-        'num_identificacion'   => 'required',
+        'nombre_usuario'       => 'required|min:5',
         'nombres'              => 'required',
         'ap_paterno'           => 'required',
         'ap_materno'           => 'required',
-        'telefono'             => ['nullable','regex:/^[0-9]{10}$/'],
+        'telefono'             => ['nullable', 'regex:/^[0-9]{10}$/'],
         'email'                => 'required|email',
     ];
 
     protected $messages = [
-        'num_identificacion.required'   => 'Es requerido',
-        'nombres.required'              => 'Es requerido',
-        'ap_paterno.required'           => 'Es requerido',
-        'ap_materno.required'           => 'Es requerido',
-        'telefono.required'             => 'Es requerido',
-        'telefono.regex'                => 'El télefono debe contener 10 digitos',
-        'email.required'                => 'Es requerido'
+        'telefono.regex'                => 'El teléfono debe contener 10 digitos',
+    ];
+
+    protected $validationAttributes = [
+        'nombre_usuario' => 'usuario',
+        'ap_paterno'     => 'apellido paterno',
+        'ap_materno'     => 'apellido materno',
+        'telefono'       => 'teléfono',
+        'password'       => 'contraseña'
     ];
 
     public function render()
@@ -49,39 +53,23 @@ class CrearEditar extends Component
     public function storeUpdate()
     {
 
-
         $this->validate($this->rules, $this->messages);
 
         $mensaje = "Usuario creado exitosamente.";
 
         if (is_null($this->usuario_id)) {
 
-            $this->validate([
-                'password' => 'required|min:5|confirmed',
-            ], ['password.confirmed' => 'Las contraseñas no coinciden.']);
+            $this->validarAgregarUsuario();
 
-            User::create([
-                'num_identificacion'   => $this->num_identificacion,
-                'nombres'              => $this->nombres,
-                'ap_paterno'           => $this->ap_paterno,
-                'ap_materno'           => $this->ap_materno,
-                'telefono'             => $this->telefono,
-                'email'                => $this->email,
-                'password'             => Hash::make($this->password)
-            ]);
-
+            $this->crearUsuario();
 
             $this->limpiarDatos();
         } else {
-            // Actualizamos
-            $usuario = User::findOrFail($this->usuario_id);
-            $usuario->num_identificacion = $this->num_identificacion;
-            $usuario->nombres            = $this->nombres;
-            $usuario->ap_paterno         = $this->ap_paterno;
-            $usuario->ap_materno         = $this->ap_materno;
-            $usuario->telefono           = $this->telefono;
-            $usuario->email              = $this->email;
-            $usuario->update();
+
+            $this->validarModificarUsuario();
+
+            $this->modificarUsuario();
+
             $mensaje = "Usuario actualizado exitosamente.";
         }
 
@@ -90,10 +78,75 @@ class CrearEditar extends Component
         $this->emit('actualizar_tabla');
     }
 
+    public function crearUsuario()
+    {
+
+        $crearUsuario = new CrearUsuario(
+            $this->nombres,
+            $this->ap_paterno,
+            $this->ap_materno,
+            $this->nombre_usuario,
+            $this->telefono,
+            $this->email,
+            false,
+            $this->password
+        );
+
+        $crearUsuario->crear();
+    }
+
+    public function modificarUsuario()
+    {
+
+        $modificarUsuario = new ModificarUsuario(
+            $this->usuario_id,
+            $this->nombres,
+            $this->ap_paterno,
+            $this->ap_materno,
+            $this->nombre_usuario,
+            $this->telefono,
+            $this->email,
+            $this->password
+        );
+
+        $modificarUsuario->modificar();
+
+    }
+
+    public function validarAgregarUsuario()
+    {
+        $this->validate([
+            'password'       => 'required|min:5|confirmed',
+            'nombre_usuario' => 'unique:users',
+            'email'          => 'unique:users',
+            'telefono'       => 'sometimes|unique:users'
+        ]);
+    }
+
+    public function validarModificarUsuario()
+    {
+        $this->validate([
+            'nombre_usuario' => Rule::unique('users')->ignore($this->usuario_id),
+            'email'          => Rule::unique('users')->ignore($this->usuario_id),
+            'telefono'       => ['sometimes', Rule::unique('users')->ignore($this->usuario_id)]
+        ]);
+
+        if ($this->modificoPassword()) {
+            $this->validate([
+                'password' => 'required|min:5|confirmed',
+            ]);
+        }
+    }
+
+    public function modificoPassword()
+    {
+        return $this->password != "" && $this->password !=  NULL ? true : false;
+    }
+
     public function limpiarDatos()
     {
-        $this->num_identificacion    = "";
         $this->nombres               = "";
+        $this->nombre_usuario        = "";
         $this->ap_paterno            = "";
         $this->ap_materno            = "";
         $this->telefono              = "";
@@ -110,12 +163,14 @@ class CrearEditar extends Component
         $this->resetErrorBag();
         $this->resetValidation();
 
+        $this->limpiarDatos();
+
         // Si el usuario existe
         if ($usuario) {
 
             $this->usuario_id         = $id;
-            $this->num_identificacion = $usuario->num_identificacion;
             $this->nombres            = $usuario->nombres;
+            $this->nombre_usuario     = $usuario->nombre_usuario;
             $this->ap_paterno         = $usuario->ap_paterno;
             $this->ap_materno         = $usuario->ap_materno;
             $this->telefono           = $usuario->telefono;
@@ -144,13 +199,11 @@ class CrearEditar extends Component
         // Si el usuario existe
         if ($usuario) {
 
-
             try {
 
                 $usuario->delete();
                 $this->emit('actualizar_tabla');
                 $this->emit('sweetAlert', 'Eliminación exitosa.', '', 'success');
-                
             } catch (Exception $e) {
                 $this->emit('sweetAlert', 'Usuario no eliminado', '', 'error');
             }

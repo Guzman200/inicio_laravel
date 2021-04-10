@@ -24,13 +24,12 @@ $(document).ready(() => {
             { "data": "full_name", name: "full_name"},
             { "data": "telefono" },
             { "data": "email" },
-            { "data": "num_identificacion" },
             { "data": "status" },
             { "defaultContent" : ""}
         ],
         "columnDefs": [ 
             {
-                "targets": 6,
+                "targets": 5,
                 "render": function ( data, type, row ) {
                     return ` 
                     <button class="btn btn-sm" type="button" 
@@ -87,7 +86,6 @@ $(document).ready(() => {
             Livewire.emit('cambiarStatus', id);
         },'question','Cambiar estatus');
     })
-
 
     /** Actualiza la tabla de transportadores al actulaizar o registrar un transportador */
     Livewire.on('actualizar_tabla', () =>{

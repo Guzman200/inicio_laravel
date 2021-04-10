@@ -47873,8 +47873,8 @@ $("#loader").click();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/test/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/test/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

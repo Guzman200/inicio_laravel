@@ -46,7 +46,7 @@ $(document).ready(() => {
     formLogin.validate({
         rules: {
 
-            email: {
+            nombre_usuario: {
                 required: true,
                 minlength: 5,
                 maxlength: 255,

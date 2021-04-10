@@ -17,14 +17,15 @@
     <th scope="col">Nombre</th>
     <th scope="col">Telefono</th>
     <th scope="col">Correo</th>
-    <th scope="col">No. Identificación</th>
     <th scope="col">Estatus</th>
     <th scope="col">Acciones</th>
 @endsection
 
-@section('modales')
-    {{-- Importacioón de los modales --}}
-    @include('modales.usuarios')
+@section('componentes_livewire')
+
+    {{-- Editar crear usuarios --}}
+    @livewire('usuario.crear-editar')
+    
 @endsection
 
 @section('scripts')

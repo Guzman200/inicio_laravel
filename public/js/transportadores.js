@@ -15015,7 +15015,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/test/resources/js/transportadores.js */"./resources/js/transportadores.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/transportadores.js */"./resources/js/transportadores.js");
 
 
 /***/ })

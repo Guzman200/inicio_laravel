@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
+Route::get('/formato', [HomeController::class, 'formato']);
 
 Auth::routes();
 
