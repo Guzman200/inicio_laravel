@@ -12,8 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/transportadores.js', 'public/js')
-    .js('resources/js/categorias.js', 'public/js')
+    .js('resources/js/proveedores.js', 'public/js')
+    .js('resources/js/formas_pago.js', 'public/js')
     .js('resources/js/materiales.js', 'public/js')
     .js('resources/js/usuarios.js', 'public/js')
     // js's de login

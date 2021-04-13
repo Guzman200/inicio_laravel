@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Transportador;
+use App\Models\Proveedor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TransportadorFactory extends Factory
+class ProveedorFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Transportador::class;
+    protected $model = Proveedor::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,8 @@ class TransportadorFactory extends Factory
     public function definition()
     {
         return [
-            'nombres'   => $this->faker->name,
-            'apellidos' => $this->faker->lastName,
+            'nombre'    => $this->faker->unique()->name,
+            'direccion' => $this->faker->address,
             'telefono'  => $this->faker->unique()->phoneNumber,
             'correo'    => $this->faker->unique()->safeEmail
         ];

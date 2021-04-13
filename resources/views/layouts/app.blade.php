@@ -145,32 +145,24 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('transportadores')}}" class="nav-link {{request()->is('transportadores') ? 'active' : ''}}">
+                            <a href="{{route('proveedores')}}" class="nav-link {{request()->is('proveedores') ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-truck"></i>
                                 <p>
-                                    Transportadores
+                                    Proveedores
                                     <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('categorias')}}" class="nav-link {{request()->is('categorias') ? 'active' : ''}}">
+                            <a href="{{route('formas_pago')}}" class="nav-link {{request()->is('formas_pago') ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                    Categorías
+                                    Formas de pago
                                     <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{route('materiales')}}" class="nav-link {{request()->is('materiales') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Materiales
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a href="{{route('usuarios')}}" class="nav-link {{request()->is('usuarios') ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-users"></i>

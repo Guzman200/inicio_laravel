@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categoria extends Model
+class TipoPago extends Model
 {
     use HasFactory;
 
-    protected $table = "categorias";
+    protected $table = "tipos_de_pago";
     protected $fillable = ['descripcion'];
 
-    // relación con productos
-    public function productos(){
-        return $this->hasMany(Material::class);
-    }
     
 }

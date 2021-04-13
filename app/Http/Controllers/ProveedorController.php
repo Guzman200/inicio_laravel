@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transportador;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class TransportadorController extends Controller
+class ProveedorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,10 @@ class TransportadorController extends Controller
 
         if($request->ajax()){
            
-            return datatables()->eloquent(Transportador::query())->toJson();
+            return datatables()->eloquent(Proveedor::query())->toJson();
         }
 
-        return view('transportadores');
+        return view('proveedores');
     }
 
     /**

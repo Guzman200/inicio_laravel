@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Categoria;
+use App\Models\TipoPago;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CategoriaFactory extends Factory
+class TipoPagoFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Categoria::class;
+    protected $model = TipoPago::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,7 @@ class CategoriaFactory extends Factory
     public function definition()
     {
         return [
-            'descripcion' => $this->faker->unique()->word
+            'descripcion' => $this->faker->unique()->creditCardType
         ];
     }
 }

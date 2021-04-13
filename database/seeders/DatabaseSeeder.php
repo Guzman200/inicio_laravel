@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categoria;
-use App\Models\Material;
-use App\Models\Transportador;
+use App\Models\Proveedor;
+use App\Models\TipoPago;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,8 +18,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // User::factory(10)->create();
-        Transportador::factory(20)->create();
-        Categoria::factory(20)->create();
-        Material::factory(20)->create();
+        Proveedor::factory(5)->create();
+        TipoPago::factory(5)->create();
+
+        User::create([
+            'nombres'        => 'Pedro', 
+            'email'          => 'my.rg.developer@gmail.com', 
+            'password'       => Hash::make('12345'),
+            'telefono'       => '9622162349',
+            'nombre_usuario' => 'pedro',
+            'status'         => true,
+            'ap_paterno'     => 'test', 
+            'ap_materno'     => 'test'
+        ]);
+        
     }
 }

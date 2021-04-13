@@ -2,22 +2,22 @@
 
 namespace App\Rules\Transportador;
 
-use App\Models\Transportador;
+use App\Models\Proveedor;
 use Illuminate\Contracts\Validation\Rule;
 
 class UpdatePhoneRule implements Rule
 {
 
-    public $transportador_id;
+    public $proveedor_id;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($transportador_id)
+    public function __construct($proveedor_id)
     {
-        $this->transportador_id = $transportador_id;
+        $this->proveedor_id = $proveedor_id;
     }
 
     /**
@@ -31,9 +31,9 @@ class UpdatePhoneRule implements Rule
     {
         /** Determina si el teléfono ya existe ignorando el número de teléfono actual (antes de editar) */
 
-        $transportador = Transportador::findOrFail($this->transportador_id);
+        $proveedor = Proveedor::findOrFail($this->proveedor_id);
 
-        $telefono = Transportador::where('telefono',$value)->where('telefono', '<>', $transportador->telefono)->first();  
+        $telefono = Proveedor::where('telefono',$value)->where('telefono', '<>', $proveedor->telefono)->first();  
         
         return $telefono ? false : true;
     }

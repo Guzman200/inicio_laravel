@@ -6,83 +6,79 @@ $(document).ready(() => {
 
     const formBuscar = $("#form-busqueda");
     
-    let tablaTransportadores;  
+    let tablaFormasPago;  
 
-    // Inicializamos la tabla transportadores
-    tablaTransportadores = $("#tabla_transportadores").DataTable({
+    // Inicializamos la tabla formas de pago
+    tablaFormasPago = $("#tabla_formas_de_pago").DataTable({
         "responsive": true,
         "autoWidth": false,
         "serverSide": true,
         "language": datatablesJSON, // Se traduce la datatables a español
         "lengthChange": false, // Ocultamos el paginado
         "ajax": {
-            "url": "../transportadores",
+            "url": "../formas_de_pago",
             "type": "GET"
         },
         "columns": [
             { "data": "id" },
-            { "data": "nombres" },
-            { "data": "apellidos" },
-            { "data": "telefono" },
-            { "data": "correo" },
+            { "data": "descripcion" },
             { "defaultContent" : ""}
         ],
         "columnDefs": [ 
             {
-                "targets": 5,
+                "targets": 2,
                 "render": function ( data, type, row ) {
-                    return ` 
-                    <button class="btn btn-sm" type="button" 
+                    return `<button class="btn btn-sm" type="button" 
                             data-toggle="dropdown"  aria-expanded="false">
                             <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#" data-edit_transportador='${row.id}'>Editar</a>
-                        <a class="dropdown-item" href="#" data-delete_transportador='${row.id}' data-nombres='${row.nombres}'>Eliminar</a>
-                    </div>`;
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#" data-edit_forma_pago='${row.id}'>Editar</a>
+                                <a class="dropdown-item" href="#" data-delete_forma_pago='${row.id}' data-descripcion='${row.descripcion}'>Eliminar</a>
+                            </div>`;
                 }
             }
         ]
     })
-
     
-    // Agregar un nuevo transportador
-    $("button[data-add_transportador]")
+   
+    // Agregar una nueva categoria
+    $("button[data-add_forma_pago]")
         .off()
         .click(function () {
             Livewire.emit('agregar');
         });
 
 
-    // Editar un transportador
-    $(document).on('click', 'a[data-edit_transportador]', function () {
+    // Editar una categoria
+    $(document).on('click', 'a[data-edit_forma_pago]', function () {
 
-        let id = $(this).data("edit_transportador");
+        let id = $(this).data("edit_forma_pago");
         Livewire.emit('editar',id);
         
     })
 
-    /// Eliminar transportador
-    $(document).on('click', 'a[data-delete_transportador]', function () {
+    /// Eliminar categoria
+    $(document).on('click', 'a[data-delete_forma_pago]', function () {
 
-        let id = $(this).data("delete_transportador");
-        let nombre = $(this).data("nombres");
+        let id = $(this).data("delete_forma_pago");
+        let descripcion = $(this).data("descripcion");
 
-        sweetDelete("¿Eliminar transportador?", `¡Se eliminara el transportador <b>${nombre}</b>!`, function () {
+        sweetDelete("¿Eliminar forma de pago?", `¡Se eliminara la forma de pago <b>${descripcion}</b>!`, function () {
             Livewire.emit('eliminar', id);
         });
 
     })
 
 
-    /** Actualiza la tabla de transportadores al actulaizar o registrar un transportador */
+    /** Actualiza la tabla de transportadores al actulaizar o registrar un trnasportador */
     Livewire.on('actualizar_tabla', () =>{
-        tablaTransportadores.ajax.reload(null,false);
+        tablaFormasPago.ajax.reload(null,false);
     });
 
 
     Livewire.on('abrirModal', () => {
-        $("#modalTransportadores").modal({backdrop: "static"});
+        $("#modalFormasDePago").modal({backdrop: "static"});
     })
 
     Livewire.on('sweetAlert', (title, message, icon) => {
@@ -92,12 +88,15 @@ $(document).ready(() => {
             icon
         )
     })
+
+  
+
     
     /** ================================> Datatables <=========================================  */ 
 
     // Agregamos nuestro input personalizado para buscar en la datatable
     $("#busqueda").on("keyup search input paste cut", function () {
-        tablaTransportadores.search(this.value).draw();
+        tablaFormasPago.search(this.value).draw();
     });
 
     // En realidad esto no hace casi nada (Podria o no estar)
