@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+//use Yajra\DataTables\Facades\DataTables;
 
 class ProveedorController extends Controller
 {
@@ -19,6 +19,7 @@ class ProveedorController extends Controller
         if($request->ajax()){
            
             return datatables()->eloquent(Proveedor::query())->toJson();
+            
         }
 
         return view('proveedores');

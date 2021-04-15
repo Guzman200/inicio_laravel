@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -14913,10 +14913,10 @@ var datatablesJSON = {
 
 /***/ }),
 
-/***/ "./resources/js/proveedores.js":
-/*!*************************************!*\
-  !*** ./resources/js/proveedores.js ***!
-  \*************************************/
+/***/ "./resources/js/orden_de_compra.js":
+/*!*****************************************!*\
+  !*** ./resources/js/orden_de_compra.js ***!
+  \*****************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14929,9 +14929,9 @@ __webpack_require__.r(__webpack_exports__);
 
 $(document).ready(function () {
   var formBuscar = $("#form-busqueda");
-  var tablaProveedores; // Inicializamos la tabla transportadores
+  var tablaOrdenesCompra; // Inicializamos la tabla ordenes de compra
 
-  tablaProveedores = $("#tabla_proveedores").DataTable({
+  tablaOrdenesCompra = $("#tabla_ordenes_de_compra").DataTable({
     "responsive": true,
     "autoWidth": false,
     "serverSide": true,
@@ -14940,35 +14940,31 @@ $(document).ready(function () {
     "lengthChange": false,
     // Ocultamos el paginado
     "ajax": {
-      "url": "../proveedores",
+      "url": "../ordenes_compra",
       "type": "GET"
     },
     "columns": [{
       "data": "id"
     }, {
-      "data": "proveedor"
+      "data": "num_pagos"
     }, {
-      "data": "rut"
+      "data": "num_facturas"
     }, {
-      "data": "giro"
+      "data": "centro_costo"
     }, {
-      "data": "direccion"
-    }, {
-      "data": "telefono"
-    }, {
-      "data": "contacto"
+      "data": "cotizacion"
     }, {
       "defaultContent": ""
     }],
     "columnDefs": [{
-      "targets": 7,
+      "targets": 5,
       "render": function render(data, type, row) {
-        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_proveedor='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_proveedor='").concat(row.id, "' data-proveedor='").concat(row.proveedor, "'>Eliminar</a>\n                    </div>");
+        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_proveedor='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_proveedor='").concat(row.id, "' data-nombre='").concat(row.nombre, "'>Eliminar</a>\n                    </div>");
       }
     }]
-  }); // Agregar un nuevo proveedor
+  }); // Agregar un nueva nueva ordend de compra
 
-  $("button[data-add_proveedor]").off().click(function () {
+  $("button[data-add_orden_de_compra]").off().click(function () {
     Livewire.emit('agregar');
   }); // Editar un proveedor
 
@@ -14979,18 +14975,18 @@ $(document).ready(function () {
 
   $(document).on('click', 'a[data-delete_proveedor]', function () {
     var id = $(this).data("delete_proveedor");
-    var nombre = $(this).data("proveedor");
+    var nombre = $(this).data("nombre");
     Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["sweetDelete"])("¿Eliminar transportador?", "\xA1Se eliminara el proveedor <b>".concat(nombre, "</b>!"), function () {
       Livewire.emit('eliminar', id);
     });
   });
-  /** Actualiza la tabla de transportadores al actulaizar o registrar un proveedor */
+  /** Actualiza la tabla de ordenes de compra al actulaizar o registrar una orden de compra */
 
   Livewire.on('actualizar_tabla', function () {
-    tablaProveedores.ajax.reload(null, false);
+    tablaOrdenesCompra.ajax.reload(null, false);
   });
   Livewire.on('abrirModal', function () {
-    $("#modalProveedores").modal({
+    $("#modalOrdenesDeCompra").modal({
       backdrop: "static"
     });
   });
@@ -15001,7 +14997,7 @@ $(document).ready(function () {
   // Agregamos nuestro input personalizado para buscar en la datatable
 
   $("#busqueda").on("keyup search input paste cut", function () {
-    tablaProveedores.search(this.value).draw();
+    tablaOrdenesCompra.search(this.value).draw();
   }); // En realidad esto no hace casi nada (Podria o no estar)
 
   formBuscar.submit(function (event) {
@@ -15012,14 +15008,14 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 1:
-/*!*******************************************!*\
-  !*** multi ./resources/js/proveedores.js ***!
-  \*******************************************/
+/***/ 3:
+/*!***********************************************!*\
+  !*** multi ./resources/js/orden_de_compra.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/proveedores.js */"./resources/js/proveedores.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/orden_de_compra.js */"./resources/js/orden_de_compra.js");
 
 
 /***/ })

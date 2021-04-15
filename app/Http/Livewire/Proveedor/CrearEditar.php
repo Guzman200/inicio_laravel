@@ -12,26 +12,26 @@ class CrearEditar extends Component
 {
 
     public $proveedor_id;
-    public $nombre;
+    public $proveedor;
+    public $rut;
+    public $giro;
     public $direccion;
     public $telefono;
-    public $correo;
+    public $contacto;
 
     protected $listeners = ['editar', 'agregar', 'eliminar', 'storeUpdate'];
 
     protected $rules = [
-        'nombre'   => 'required',
+        'proveedor' => 'required',
         'direccion' => 'required',
         'telefono'  => ['required', 'regex:/^[0-9]{10}$/'],
-        'correo'    => 'required|email'
+        'contacto'  => 'required',
+        'giro'      => 'required',
+        'rut'       => 'required'
     ];
 
     protected $messages = [
-        'nombre.required'    => 'Es requerido',
-        'direccion.required' => 'Es requerido',
-        'telefono.required'  => 'Es requerido',
         'telefono.regex'     => 'El télefono debe contener 10 digitos',
-        'correo.required'    => 'Es requerido'
     ];
 
     public function render()
@@ -49,33 +49,37 @@ class CrearEditar extends Component
         if (is_null($this->proveedor_id)) {
 
             $this->validate([
-                'nombre' => 'unique:proveedores',
-                'correo'          => 'unique:proveedores',
+                'proveedor' => 'unique:proveedores',
+                'rut'          => 'unique:proveedores',
                 'telefono'       => 'sometimes|unique:proveedores'
             ]);
 
             Proveedor::create([
-                'nombre'    => $this->nombre,
+                'proveedor' => $this->proveedor,
                 'direccion' => $this->direccion,
                 'telefono'  => $this->telefono,
-                'correo'    => $this->correo
+                'contacto'  => $this->contacto,
+                'giro'      => $this->giro,
+                'rut'       => $this->rut
             ]);
 
             $this->limpiarDatos();
         } else {
 
             $this->validate([
-                'nombre'    => Rule::unique('proveedores')->ignore($this->proveedor_id),
-                'correo'    => Rule::unique('proveedores')->ignore($this->proveedor_id),
+                'proveedor'    => Rule::unique('proveedores')->ignore($this->proveedor_id),
+                'rut'    => Rule::unique('proveedores')->ignore($this->proveedor_id),
                 'telefono'  => ['sometimes', Rule::unique('proveedores')->ignore($this->proveedor_id)]
             ]);
 
             // Actualizamos
             $proveedor = Proveedor::findOrFail($this->proveedor_id);
-            $proveedor->nombre   = $this->nombre;
+            $proveedor->proveedor = $this->proveedor;
             $proveedor->direccion = $this->direccion;
             $proveedor->telefono  = $this->telefono;
-            $proveedor->correo    = $this->correo;
+            $proveedor->contacto  = $this->contacto;
+            $proveedor->giro      = $this->giro;
+            $proveedor->rut       = $this->rut;
             $proveedor->update();
             $mensaje = "Proveedor actualizado exitosamente.";
         }
@@ -87,15 +91,19 @@ class CrearEditar extends Component
 
     public function limpiarDatos()
     {
-        $this->nombre    = "";
-        $this->direccion = "";
-        $this->telefono  = "";
-        $this->correo    = "";
+        $this->proveedor   = "";
+        $this->direccion   = "";
+        $this->telefono    = "";
+        $this->contacto    = "";
+        $this->giro        = "";
+        $this->rut         = "";
     }
 
     public function editar($id)
     {
         $proveedor = Proveedor::find($id);
+
+        
 
         // Limpiamos los errores de validacion en caso existan
         $this->resetErrorBag();
@@ -104,11 +112,15 @@ class CrearEditar extends Component
         // Si el proveedor existe
         if ($proveedor) {
 
-            $this->proveedor_id     = $id;
-            $this->nombre           = $proveedor->nombre;
-            $this->direccion        = $proveedor->direccion;
-            $this->telefono         = $proveedor->telefono;
-            $this->correo           = $proveedor->correo;
+            
+
+            $this->proveedor_id  = $proveedor->id;
+            $this->proveedor = $proveedor->proveedor;
+            $this->direccion = $proveedor->direccion;
+            $this->telefono  = $proveedor->telefono;
+            $this->contacto  = $proveedor->contacto;
+            $this->giro      = $proveedor->giro;
+            $this->rut       = $proveedor->rut;
 
             $this->emit('abrirModal');
         }
@@ -139,15 +151,8 @@ class CrearEditar extends Component
                 $this->emit('sweetAlert', 'Eliminación exitosa.', '', 'success');
 
             } catch (Exception $e) {
-                $this->emit('sweetAlert', 'Proveedor de pago no eliminada', '', 'error');
+                $this->emit('sweetAlert', 'Proveedor no eliminado', '', 'error');
             }
         }
     }
 }
-
-
-
-
-// num 
-// 5256 7831 2865 9795
-// banamex 

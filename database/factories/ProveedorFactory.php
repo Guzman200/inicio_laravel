@@ -22,10 +22,12 @@ class ProveedorFactory extends Factory
     public function definition()
     {
         return [
-            'nombre'    => $this->faker->unique()->name,
+            'proveedor'    => $this->faker->unique()->name,
+            'rut'    => $this->faker->unique()->isbn10,
+            'giro'    => $this->faker->randomElement(['Software', 'Pesca', 'Construcción', 'Ganadería']),
             'direccion' => $this->faker->address,
             'telefono'  => $this->faker->unique()->phoneNumber,
-            'correo'    => $this->faker->unique()->safeEmail
+            'contacto'    => $this->faker->unique()->safeEmail
         ];
     }
 }

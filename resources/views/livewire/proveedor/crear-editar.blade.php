@@ -30,19 +30,45 @@
                         <input type="hidden" name="proveedor" value="{{ $transportador_id }}">
                         --}}
 
-                        {{-- Nombre --}}
+                        {{-- Proveedor --}}
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label class="has-float-label">
-                                    <input wire:model.defer="nombre" name="nombre" type="text"
-                                        class="form-control hide-placeholder @error('nombres') is-invalid @enderror"
-                                        placeholder="Nombre">
-                                    <span>Nombre</span>
+                                    <input wire:model.defer="proveedor" name="proveedor" type="text"
+                                        class="form-control hide-placeholder @error('proveedor') is-invalid @enderror"
+                                        placeholder="proveedor">
+                                    <span>Proveedor</span>
                                 </label>
-                                @error('nombre')
+                                @error('proveedor')
                                     <div class="invalid-feedback text-right d-block">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+
+                        {{-- Rut --}}
+                        <div class="form-group">
+                            <label class="has-float-label">
+                                <input wire:model.defer="rut" name="rut" type="text"
+                                    class="form-control hide-placeholder @error('rut') is-invalid @enderror"
+                                    placeholder="Rut">
+                                <span>Rut</span>
+                            </label>
+                            @error('rut')
+                                <div class="invalid-feedback text-right d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Giro --}}
+                        <div class="form-group">
+                            <label class="has-float-label">
+                                <input wire:model.defer="giro" name="giro" type="text"
+                                    class="form-control hide-placeholder @error('giro') is-invalid @enderror"
+                                    placeholder="giro">
+                                <span>Giro</span>
+                            </label>
+                            @error('giro')
+                                <div class="invalid-feedback text-right d-block">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         {{-- Dirección --}}
@@ -75,15 +101,15 @@
                             </div>
                         </div>
 
-                        {{-- Correo --}}
+                        {{-- Contacto --}}
                         <div class="form-group">
                             <label class="has-float-label">
-                                <input wire:model.defer="correo" name="correo" type="email"
-                                    class="form-control hide-placeholder @error('correo') is-invalid @enderror"
-                                    placeholder="Correo">
-                                <span>Correo</span>
+                                <input wire:model.defer="contacto" name="contacto" type="text"
+                                    class="form-control hide-placeholder @error('contacto') is-invalid @enderror"
+                                    placeholder="contacto">
+                                <span>Contacto</span>
                             </label>
-                            @error('correo')
+                            @error('contacto')
                                 <div class="invalid-feedback text-right d-block">{{ $message }}</div>
                             @enderror
                         </div>

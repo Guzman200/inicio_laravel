@@ -15,9 +15,11 @@
 @section('cabezeras_tabla')
     <th scope="col">#</th>
     <th scope="col">Proveedor</th>
+    <th scope="col">Rut</th>
+    <th scope="col">Giro</th>
     <th scope="col">Dirección</th>
     <th scope="col">Telefono</th>
-    <th scope="col">Correo</th>
+    <th scope="col">Contacto</th>
     <th scope="col">Acciones</th>
 @endsection
 
