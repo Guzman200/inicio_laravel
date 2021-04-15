@@ -61,9 +61,38 @@ class Crear extends Component
 
         $tipos_de_pago = TipoPago::get();
 
-        return view('livewire.orden-compra.crear', compact('proveedores','tipos_de_pago'));
+        return view('livewire.orden-compra.crear', compact('proveedores', 'tipos_de_pago'));
     }
 
+    /**
+     * Se genera la orden y se guarda en BD
+     * 
+     * @return void
+     */
+    public function generarOrden()
+    {
+
+        $this->validarProveedorYCotizacion();
+        $this->validarCentroCostoYProtecto();
+
+        if (!$this->hayItemsEnLaOrden()) {
+            session()->flash('error', 'No hay items en la orden de compra.');
+            return 0;
+        }
+
+        if (!$this->estanLosPagosDistribuidosCorrectamente()) {
+            session()->flash('error', 'Los pagos no esta distribuidos correctamente.');
+            return 0;
+        }
+
+        //
+    }
+
+    /**
+     * Cuando se presiona el boton de la vista "Nueva orden de compra"
+     * 
+     * @return void
+     */
     public function agregar()
     {
 
@@ -213,24 +242,97 @@ class Crear extends Component
         $this->total = $this->total_neto + $this->iva_en_cantidad;
     }
 
-    public function agregarPago(){
+    public function agregarPago()
+    {
 
         // Validamos los campos para agregar un pago
         $this->validarPago();
 
+        if ($this->sumaPagosSobrePasaTotalOrdenCompra()) {
+            session()->flash('error', 'La suma de todos los pagos sobrepasa el total de la orden de compra.');
+            return 0;
+        }
 
+        $pago = TipoPago::find($this->tipo_pago_id);
+
+        // Si el tipo de pago existe
+        if ($pago) {
+
+            $this->pagos[] = [
+                'monto'        => $this->monto_pago,
+                'fecha'        => $this->fecha_pago,
+                'tipo_pago_id' => $this->tipo_pago_id,
+                'descripcion'  => $pago->descripcion
+            ];
+        }
+    }
+
+    public function eliminarPago($key)
+    {
+        unset($this->pagos[$key]);
     }
 
     public function validarPago()
     {
         $this->validate([
-            'monto_pago' => 'required|numeric',
+            'monto_pago' => 'required|numeric|gte:1',
             'fecha_pago' => 'required|date',
             'tipo_pago_id' => 'required'
-        ],[],[
+        ], [], [
             'monto_pago'   => 'monto',
             'fecha_pago'   => 'fecha',
             'tipo_pago_id' => 'forma de pago'
         ]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function sumaPagosSobrePasaTotalOrdenCompra()
+    {
+
+        // Obtenemos el total que sumas los montos de todos los pagos hasta el momento
+        $monto_total_pago = array_sum(array_column($this->pagos, 'monto'));
+
+        // Si la suma de los montos de todos los pagos mas el nuevo pago es mayor al total de la orden de compra
+        if (($monto_total_pago + $this->monto_pago) > $this->total) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function validarProveedorYCotizacion()
+    {
+        // Validamos los datos del proveedor y cotizacion
+        $this->validate([
+            'proveedor_id' => 'required|numeric',
+            'cotizacion'   => 'required'
+        ], [], ['proveedor_id' => 'proveedor', 'cotizacion' => 'cotización']);
+    }
+
+    public function validarCentroCostoYProtecto()
+    {
+        // Validamos los datos de la orden de compra
+        $this->validate([
+            'centro_costo' => 'required',
+            'proyecto'     => 'required'
+        ], [], ['centro_costo' => 'centro de costo']);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hayItemsEnLaOrden()
+    {
+        return count($this->items) == 0 ? false : true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function estanLosPagosDistribuidosCorrectamente()
+    {
+        return ($this->total - array_sum(array_column($this->pagos, 'monto'))) != 0 ? false : true;
     }
 }

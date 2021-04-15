@@ -22,14 +22,28 @@
                         <li class="nav-item" role="presentation">
                             <a wire:ignore.self class="nav-link active" id="pills-home-tab" data-toggle="pill"
                                 href="#pills-home" role="tab" aria-controls="pills-home"
-                                aria-selected="true">Proveedor</a>
+                                aria-selected="true">
+                                @if($errors->has('proveedor_id') || $errors->has('cotizacion'))
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </button>
+                                @endif
+                                Proveedor
+                            </a>
                         </li>
 
                         <!-- DATOS DE LA ORDEN DE COMPRA -->
                         <li class="nav-item" role="presentation">
                             <a wire:ignore.self class="nav-link" id="pills-profile-tab" data-toggle="pill"
                                 href="#pills-profile" role="tab" aria-controls="pills-profile"
-                                aria-selected="false">Datos orden de compra</a>
+                                aria-selected="false">
+                                @if($errors->has('centro_costo') || $errors->has('proyecto'))
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </button>
+                                @endif
+                                Datos orden de compra
+                            </a>
                         </li>
 
                         <!-- ITEMS DE LA ORDEN DE COMPRA -->
@@ -68,8 +82,8 @@
                                                 <div class="col-sm-12">
                                                     <label class="has-float-label">
                                                         <select wire:model="proveedor_id"
-                                                            class="form-control hide-placeholder @error('rut') is-invalid @enderror"
-                                                            placeholder="Rut">
+                                                            class="form-control hide-placeholder @error('proveedor_id') is-invalid @enderror custom-select"
+                                                            placeholder="Proveedor">
                                                             <option value="" selected>Selecciona un proveedor
                                                             </option>
                                                             @foreach ($proveedores as $item)
@@ -80,7 +94,7 @@
                                                         </select>
                                                         <span>Proveedor {{ $proveedor_id }}</span>
                                                     </label>
-                                                    @error('rut')
+                                                    @error('proveedor_id')
                                                         <div class="invalid-feedback text-right d-block">
                                                             {{ $message }}</div>
                                                     @enderror
@@ -193,7 +207,6 @@
                         <div wire:ignore.self class="tab-pane fade" id="pills-profile" role="tabpanel"
                             aria-labelledby="pills-profile-tab">
 
-
                             <div class="row justify-content-md-center">
 
                                 <div class="col-12 col-md-9">
@@ -214,7 +227,8 @@
                                                         <label class="has-float-label">
                                                             <input wire:model.defer="fecha" name="fecha" type="date"
                                                                 class="form-control hide-placeholder @error('fecha') is-invalid @enderror"
-                                                                placeholder="Fecha">
+                                                                placeholder="Fecha"
+                                                                disabled>
                                                             <span>Fecha</span>
                                                         </label>
                                                         @error('fecha')
@@ -501,9 +515,18 @@
                         <div wire:ignore.self class="tab-pane fade" id="pills-pagos" role="tabpanel"
                             aria-labelledby="pills-pagos-tab">
 
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{{ session('error') }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
 
                             {{-- FORMULARIO PARA APLICAR DESCUENTO E IVA --}}
                             <div class="row">
+
 
                                 {{-- TOTAL ORDEN DE COMPRA --}}
                                 <div class="col-12 col-md-4 col-lg-3">
@@ -589,7 +612,7 @@
                                                     <th scope="col">Eliminar</th>
                                                     <th scope="col">#</th>
                                                     <th scope="col">Monto</th>
-                                                    <th scope="col">Tipo de pago</th>
+                                                    <th scope="col">Forma de pago</th>
                                                     <th scope="col">Fecha del pago</th>
                                                 </tr>
                                             </thead>
@@ -604,52 +627,33 @@
                                                         </td>
                                                         <th scope="row">{{ $loop->iteration }}</th>
                                                         <td>{{ $item['monto'] }}</td>
-                                                        <td>{{ $item['tipo_pago_id'] }}</td>
+                                                        <td>{{ $item['descripcion'] }}</td>
                                                         <td>{{ $item['fecha'] }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
-                                            {{-- <tfoot>
+                                            <tfoot>
                                                 <tr>
-                                                    <td class="text-left" colspan="5">
-                                                    <th class="text-left">
-                                                        Subtotal
-                                                    </th>
-                                                    <td>{{ $subtotal }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left" colspan="5">
-                                                    <th class="text-left">
-                                                        Descuento
-                                                    </th>
-                                                    <td>
-                                                        {{ $descuento_en_cantidad }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left" colspan="5">
-                                                    <th class="text-left">
-                                                        Neto
-                                                    </th>
-                                                    <td>{{ $total_neto }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left" colspan="5">
-                                                    <th class="text-left">
-                                                        IVA
-                                                    </th>
-                                                    <td>{{ $iva_en_cantidad }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left" colspan="5">
+                                                    <td class="text-left" colspan="3">
                                                     <th class="text-left bg-secondary">
-                                                        TOTAL
+                                                        Falta pagar
                                                     </th>
-                                                    <th class="bg-secondary">{{ $total }}</th>
+                                                    <th class="text-left bg-secondary">
+                                                        {{ $total - array_sum(array_column($this->pagos, 'monto')) }}
+                                                    </th>
                                                 </tr>
-                                            </tfoot> --}}
+                                            </tfoot>
                                         </table>
                                     </div>
+                                </div>
+                            </div>
+
+                            {{-- BOTON GENERAR ORDEN DE COMPRA --}}
+                            <div class="row justify-content-end">
+                                <div class="col-12 col-md-3 col-lg-2">
+                                    <button wire:click="generarOrden" class="btn btn-primary form-control">
+                                        Generar orden de compra
+                                    </button>
                                 </div>
                             </div>
 
