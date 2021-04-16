@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\OrdenCompra;
 
 use App\Facades\OrdenCompra;
+use App\Models\Iva;
 use App\Models\Proveedor;
 use App\Models\TipoPago;
 use App\Services\OrdenCompra\OrdenCompraService;
@@ -31,7 +32,7 @@ class Crear extends Component
     public $total_neto = 0;
     public $descuento = 0; // en porcentaje
     public $descuento_en_cantidad = 0;
-    public $iva = 0; // en porcentaje
+    public $iva_id = 1; // default 0%
     public $iva_en_cantidad = 0;
     public $total = 0;
 
@@ -61,7 +62,12 @@ class Crear extends Component
 
         $tipos_de_pago = TipoPago::get();
 
-        return view('livewire.orden-compra.crear', compact('proveedores', 'tipos_de_pago'));
+        $ivas = Iva::get();
+
+        return view(
+            'livewire.orden-compra.crear',
+            compact('proveedores', 'tipos_de_pago', 'ivas')
+        );
     }
 
     /**
@@ -215,25 +221,22 @@ class Crear extends Component
         $this->aplicarDescuento();
     }
 
-    public function updatedIva()
-    {
-
-        if (!(is_numeric($this->iva) && $this->esRangoEntreCeroYCien($this->iva))) {
-            $this->iva = 0;
-        }
-
-        $this->aplicarIva();
-    }
-
+   
     public function aplicarIva()
     {
-        if ((is_numeric($this->iva) && $this->esRangoEntreCeroYCien($this->iva))) {
+        if ((is_numeric($this->iva_id))) {
 
-            // Calculamos el iva a pagar por el total neto
-            $this->iva_en_cantidad = ($this->total_neto * $this->iva) / 100;
+            $iva = Iva::find($this->iva_id);
 
-            // Calculamos el total de la orden de compra
-            $this->actualizarTotal();
+            // Si iva existe
+            if ($iva) {
+
+                // Calculamos el iva a pagar por el total neto
+                $this->iva_en_cantidad = ($this->total_neto * $iva->porcentaje) / 100;
+
+                // Calculamos el total de la orden de compra
+                $this->actualizarTotal();
+            }
         }
     }
 

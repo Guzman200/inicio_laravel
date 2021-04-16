@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             'ap_paterno'     => 'test', 
             'ap_materno'     => 'test'
         ]);
+
+        $this->call(IvaSeeder::class);
         
     }
 }

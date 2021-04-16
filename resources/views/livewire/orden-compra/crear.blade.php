@@ -422,8 +422,16 @@
                                 {{-- IVA EN % --}}
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label class="has-float-label">
-                                        <input type="number" wire:model.lazy="iva"
-                                            class="form-control hide-placeholder text-center" placeholder="Iva">
+
+                                        <select wire:model="iva_id"
+                                                wire:change="aplicarIva"
+                                                class="form-control hide-placeholder text-center" 
+                                                placeholder="Iva">
+
+                                            @foreach ($ivas as $item)
+                                                <option value="{{$item->id}}">{{$item->porcentaje}} %</option>
+                                            @endforeach
+                                        </select>
                                         <span>Iva</span>
                                     </label>
                                 </div>
