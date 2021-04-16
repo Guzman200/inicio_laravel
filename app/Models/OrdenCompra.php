@@ -32,4 +32,15 @@ class OrdenCompra extends Model
     {
         return $this->hasMany(DetalleOrdenCompra::class);
     }
+
+
+    /** ============================== METODOS ========================= */
+
+    public function getNumeroPagosPagados()
+    {
+        $total = Pago::where('ordenes_de_compra_id', $this->id)
+                    ->where('status', 'pagado')->count('id');
+
+        return $total;
+    }
 }

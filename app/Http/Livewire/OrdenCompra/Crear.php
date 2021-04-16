@@ -4,6 +4,7 @@ namespace App\Http\Livewire\OrdenCompra;
 
 
 use App\Models\Iva;
+use App\Models\OrdenCompra;
 use App\Models\Proveedor;
 use App\Models\TipoPago;
 use App\Services\OrdenCompra\CrearOrdenCompra;

@@ -14,10 +14,13 @@
 
 @section('cabezeras_tabla')
     <th scope="col">#</th>
-    <th scope="col">Número de pagos</th>
-    <th scope="col">Número de facturas</th>
+    <th scope="col">Proyecto</th>
     <th scope="col">Centro de costo</th>
     <th scope="col">Cotización</th>
+    <th scope="col">Número de pagos</th>
+    <th scope="col">Pagos</th>
+    <th scope="col">Número de facturas</th>
+    <th scope="col">Total</th>
     <th scope="col">Acciones</th>
 @endsection
 

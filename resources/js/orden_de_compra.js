@@ -21,15 +21,18 @@ $(document).ready(() => {
         },
         "columns": [
             { "data": "id" },
-            { "data": "num_pagos" },
-            { "data": "num_facturas" },
+            { "data": "proyecto" },
             { "data": "centro_costo" },
             { "data": "cotizacion" },
+            { "data": "num_pagos" },
+            { "data": "barra_pago"},
+            { "data": "num_facturas" },
+            { "data": "total" },
             { "defaultContent" : ""}
         ],
         "columnDefs": [ 
             {
-                "targets": 5,
+                "targets": 8,
                 "render": function ( data, type, row ) {
                     return ` 
                     <button class="btn btn-sm" type="button" 

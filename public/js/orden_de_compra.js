@@ -14946,18 +14946,24 @@ $(document).ready(function () {
     "columns": [{
       "data": "id"
     }, {
-      "data": "num_pagos"
-    }, {
-      "data": "num_facturas"
+      "data": "proyecto"
     }, {
       "data": "centro_costo"
     }, {
       "data": "cotizacion"
     }, {
+      "data": "num_pagos"
+    }, {
+      "data": "barra_pago"
+    }, {
+      "data": "num_facturas"
+    }, {
+      "data": "total"
+    }, {
       "defaultContent": ""
     }],
     "columnDefs": [{
-      "targets": 5,
+      "targets": 8,
       "render": function render(data, type, row) {
         return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_proveedor='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_proveedor='").concat(row.id, "' data-nombre='").concat(row.nombre, "'>Eliminar</a>\n                    </div>");
       }
