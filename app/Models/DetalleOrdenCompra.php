@@ -19,8 +19,9 @@ class DetalleOrdenCompra extends Model
         'ordenes_de_compra_id'
     ];
 
-    // relacion con orden de compra
+    /* relacion con orden de compra */
     public function ordenCompra(){
-        return $this->belongsTo(OrdenCompra::class);
+        return $this->belongsTo(OrdenCompra::class,'ordenes_de_compra_id', 'id');
     }
+    
 }

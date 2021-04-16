@@ -27,6 +27,7 @@
 @section('componentes_livewire')
 
     @livewire('orden-compra.crear')
+    @livewire('orden-compra.ver-detalle')
 
 @endsection
 

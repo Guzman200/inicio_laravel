@@ -42,6 +42,7 @@ $(document).ready(() => {
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="#" data-edit_proveedor='${row.id}'>Editar</a>
                         <a class="dropdown-item" href="#" data-delete_proveedor='${row.id}' data-nombre='${row.nombre}'>Eliminar</a>
+                        <a class="dropdown-item" href="#" data-ver_detalle='${row.id}'>Ver detalle</a>
                     </div>`;
                 }
             }
@@ -76,7 +77,6 @@ $(document).ready(() => {
         });
 
     })
-
 
     /** Actualiza la tabla de ordenes de compra al actulaizar o registrar una orden de compra */
     Livewire.on('actualizar_tabla', () =>{

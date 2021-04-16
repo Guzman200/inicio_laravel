@@ -21,10 +21,15 @@ class OrdenCompraController extends Controller
                     $num_pagados = $orden->getNumeroPagosPagados();
 
                     $porcentaje = ($num_pagados * 100) / $orden->num_pagos;
-                    
+
+                    $bg = "";
+
+                    if($porcentaje == 100){
+                        $bg = "bg-success";
+                    }
  
                     return "<div class='progress' style='height: 20px;'>
-                                <div class='progress-bar' role='progressbar' style='width: $porcentaje%;' aria-valuemin='0' aria-valuemax='100'>$num_pagados</div>
+                                <div class='progress-bar $bg' role='progressbar' style='width: $porcentaje%;' aria-valuemin='0' aria-valuemax='100'>$num_pagados</div>
                             </div>
                             "; 
                     

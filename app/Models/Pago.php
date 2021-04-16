@@ -18,4 +18,10 @@ class Pago extends Model
         'ordenes_de_compra_id',
         'tipos_de_pago_id'
     ];
+
+    // relacion con tipo de pago
+    public function tipoDePago()
+    {
+        return $this->belongsTo(TipoPago::class,'tipos_de_pago_id', 'id');
+    }
 }

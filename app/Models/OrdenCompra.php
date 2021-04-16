@@ -30,7 +30,27 @@ class OrdenCompra extends Model
     // relacion con detalle orden de compra
     public function detalleOrdenCompra()
     {
-        return $this->hasMany(DetalleOrdenCompra::class);
+        return $this->hasMany(DetalleOrdenCompra::class, 'ordenes_de_compra_id', 'id');
+    }
+
+    public function pagos(){
+        return $this->hasMany(Pago::class, 'ordenes_de_compra_id', 'id');
+    }
+
+    // relacion con iva
+    public function iva()
+    {
+        return $this->belongsTo(Iva::class);
+    }
+
+    // relacion con proveedor
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class,'proveedores_id','id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
 
