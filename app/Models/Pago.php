@@ -11,6 +11,10 @@ class Pago extends Model
 
     protected $table = "pagos";
 
+    protected $dates = [
+        'fecha'
+    ];
+
     protected $fillable = [
         'fecha',
         'cantidad',

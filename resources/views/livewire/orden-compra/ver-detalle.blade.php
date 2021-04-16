@@ -80,7 +80,7 @@
                                                         <td>{{ $orden->proveedor->proveedor }}</td>
                                                         <td>{{ $orden->user->nombres . ' ' . $orden->user->ap_paterno }}
                                                         </td>
-                                                        <td>{{ $orden->created_at }}</td>
+                                                        <td>{{ $orden->created_at->format('d-m-Y') }}</td>
                                                     </tr>
                                                 @endif
                                             </tbody>
@@ -185,7 +185,7 @@
                                                                     <th scope="row">{{ $pago->id }}</th>
                                                                     <td>{{ $pago->tipoDePago->descripcion }}</td>
                                                                     <td>{{ $pago->cantidad }}</td>
-                                                                    <td>{{ $pago->fecha }}</td>
+                                                                    <td>{{ $pago->fecha->formatLocalized('%A, %d de %B %Y')}}</td>
                                                                     <td>
                                                                         @if ($pago->status == 'por pagar')
                                                                             <span class="badge badge-warning">Por

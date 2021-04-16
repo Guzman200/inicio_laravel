@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\OrdenCompra;
 
 use App\Models\OrdenCompra;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class VerDetalle extends Component
@@ -15,6 +16,7 @@ class VerDetalle extends Component
     public function render()
     {
         $orden = OrdenCompra::find($this->orden_id);
+
         return view('livewire.orden-compra.ver-detalle', ['orden' => $orden]);
     }
 
