@@ -439,7 +439,7 @@
                             <div class="row mt-4">
                                 <div class="col-12 col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-sm">
+                                        <table class="table table-sm table-hover">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Eliminar</th>
@@ -610,7 +610,7 @@
                             <div class="row mt-4">
                                 <div class="col-12 col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-sm">
+                                        <table class="table table-sm table-hover">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Eliminar</th>

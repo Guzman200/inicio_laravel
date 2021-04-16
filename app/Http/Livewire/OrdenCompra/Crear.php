@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire\OrdenCompra;
 
-use App\DTOs\DetalleOrdenCompraDTO;
-use App\Facades\OrdenCompra;
+
 use App\Models\Iva;
 use App\Models\Proveedor;
 use App\Models\TipoPago;
 use App\Services\OrdenCompra\CrearOrdenCompra;
-use App\Services\OrdenCompra\OrdenCompraService;
+use App\Services\Pago\CrearPago;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -81,9 +80,9 @@ class Crear extends Component
     public function generarOrden()
     {
 
-        //$this->validarProveedorYCotizacion();
-        //$this->validarCentroCostoYProtecto();
-        /*
+        $this->validarProveedorYCotizacion();
+        $this->validarCentroCostoYProtecto();
+
         if (!$this->hayItemsEnLaOrden()) {
             session()->flash('error', 'No hay items en la orden de compra.');
             return 0;
@@ -93,7 +92,6 @@ class Crear extends Component
             session()->flash('error', 'Los pagos no esta distribuidos correctamente.');
             return 0;
         }
-        */
 
         $this->crearOrden();
 
@@ -103,10 +101,6 @@ class Crear extends Component
 
     private function crearOrden()
     {
-
-        sleep(4);
-
-        return 0;
 
         $num_pagos = count($this->pagos);
         $user_id = auth()->user()->id;
@@ -129,20 +123,36 @@ class Crear extends Component
 
         DB::transaction(function () use ($crearOrden) {
 
+            // Creamos la orden de compra
             $orden = $crearOrden->crear();
 
+            // Guardamos el detalle de la orden
             foreach ($this->items as $item) {
 
-                $detalleDTO = new DetalleOrdenCompraDTO(
+                $crearOrden->crearDetalle(
                     $item['descripcion'],
                     $item['unidad'],
                     $item['cantidad'],
-                    $item['valor_unitario'],
-                    $orden->id
+                    $item['valor_unitario']
+                );
+            }
+
+            // Guardamos los pagos de la orden
+            foreach($this->pagos as $item){
+
+                $pago = new CrearPago(
+                    $item['fecha'],
+                    $item['monto'],
+                    $orden->id,
+                    $item['tipo_pago_id']
                 );
 
-                $crearOrden->crearDetalle($detalleDTO);
+                $pago->crear();
+
             }
+
+
+
         });
     }
 

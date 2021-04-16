@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CrearOrdenCompra
 {
+    private $id;
     private $num_pagos;
     private $num_facturas;
     private $centro_costo;
@@ -22,6 +23,7 @@ class CrearOrdenCompra
     private $proveedor_id;
     private $user_id;
     private $observaciones;
+    private const STATUS = "por pagar";
 
     public function __construct(
         $num_pagos,
@@ -69,20 +71,23 @@ class CrearOrdenCompra
             'iva_id'          => $this->iva_id,
             'proveedores_id'  => $this->proveedor_id,
             'user_id'         => $this->user_id,
-            'observaciones'   => $this->observaciones
+            'observaciones'   => $this->observaciones,
+            'status'          => self::STATUS
         ]);
+
+        $this->id = $orden->id;
 
         return $orden;
     }
 
-    public function crearDetalle(DetalleOrdenCompraDTO $detalleDTO)
+    public function crearDetalle($descripcion, $unidad, $cantidad, $valor_unitario)
     {
         $detalle = DetalleOrdenCompra::create([
-            'descripcion'          => $detalleDTO->getDescripcion(),
-            'unidad'               => $detalleDTO->getUnidad(),
-            'cantidad'             => $detalleDTO->getCantidad(),
-            'valor_unitario'       => $detalleDTO->getValorUnitario(),
-            'ordenes_de_compra_id' => $detalleDTO->getOrdenCompraId()
+            'descripcion'          => $descripcion,
+            'unidad'               => $unidad,
+            'cantidad'             => $cantidad,
+            'valor_unitario'       => $valor_unitario,
+            'ordenes_de_compra_id' => $this->id
         ]);
 
         return $detalle;
