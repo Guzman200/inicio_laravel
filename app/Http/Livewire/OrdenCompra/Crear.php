@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\OrdenCompra;
 
+use App\DTOs\DetalleOrdenCompraDTO;
 use App\Facades\OrdenCompra;
 use App\Models\Iva;
 use App\Models\Proveedor;
 use App\Models\TipoPago;
+use App\Services\OrdenCompra\CrearOrdenCompra;
 use App\Services\OrdenCompra\OrdenCompraService;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Crear extends Component
@@ -78,9 +81,9 @@ class Crear extends Component
     public function generarOrden()
     {
 
-        $this->validarProveedorYCotizacion();
-        $this->validarCentroCostoYProtecto();
-
+        //$this->validarProveedorYCotizacion();
+        //$this->validarCentroCostoYProtecto();
+        /*
         if (!$this->hayItemsEnLaOrden()) {
             session()->flash('error', 'No hay items en la orden de compra.');
             return 0;
@@ -90,8 +93,57 @@ class Crear extends Component
             session()->flash('error', 'Los pagos no esta distribuidos correctamente.');
             return 0;
         }
+        */
 
-        //
+        $this->crearOrden();
+
+        $this->emit('actualizar_tabla');
+        $this->emit('sweetAlert', 'Orden de compra creada', '', 'success');
+    }
+
+    private function crearOrden()
+    {
+
+        sleep(4);
+
+        return 0;
+
+        $num_pagos = count($this->pagos);
+        $user_id = auth()->user()->id;
+
+        $crearOrden = new CrearOrdenCompra(
+            $num_pagos,
+            0,
+            $this->centro_costo,
+            $this->cotizacion,
+            $this->proyecto,
+            $this->total,
+            $this->total_neto,
+            $this->subtotal,
+            $this->descuento,
+            $this->iva_id,
+            $this->proveedor_id,
+            $user_id,
+            $this->observaciones
+        );
+
+        DB::transaction(function () use ($crearOrden) {
+
+            $orden = $crearOrden->crear();
+
+            foreach ($this->items as $item) {
+
+                $detalleDTO = new DetalleOrdenCompraDTO(
+                    $item['descripcion'],
+                    $item['unidad'],
+                    $item['cantidad'],
+                    $item['valor_unitario'],
+                    $orden->id
+                );
+
+                $crearOrden->crearDetalle($detalleDTO);
+            }
+        });
     }
 
     /**
@@ -221,7 +273,7 @@ class Crear extends Component
         $this->aplicarDescuento();
     }
 
-   
+
     public function aplicarIva()
     {
         if ((is_numeric($this->iva_id))) {

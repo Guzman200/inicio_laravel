@@ -21,9 +21,8 @@
                         <!-- PROVEEDORES -->
                         <li class="nav-item" role="presentation">
                             <a wire:ignore.self class="nav-link active" id="pills-home-tab" data-toggle="pill"
-                                href="#pills-home" role="tab" aria-controls="pills-home"
-                                aria-selected="true">
-                                @if($errors->has('proveedor_id') || $errors->has('cotizacion'))
+                                href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                                @if ($errors->has('proveedor_id') || $errors->has('cotizacion'))
                                     <button class="btn btn-danger btn-sm">
                                         <i class="fas fa-exclamation-triangle"></i>
                                     </button>
@@ -35,9 +34,8 @@
                         <!-- DATOS DE LA ORDEN DE COMPRA -->
                         <li class="nav-item" role="presentation">
                             <a wire:ignore.self class="nav-link" id="pills-profile-tab" data-toggle="pill"
-                                href="#pills-profile" role="tab" aria-controls="pills-profile"
-                                aria-selected="false">
-                                @if($errors->has('centro_costo') || $errors->has('proyecto'))
+                                href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                                @if ($errors->has('centro_costo') || $errors->has('proyecto'))
                                     <button class="btn btn-danger btn-sm">
                                         <i class="fas fa-exclamation-triangle"></i>
                                     </button>
@@ -227,8 +225,7 @@
                                                         <label class="has-float-label">
                                                             <input wire:model.defer="fecha" name="fecha" type="date"
                                                                 class="form-control hide-placeholder @error('fecha') is-invalid @enderror"
-                                                                placeholder="Fecha"
-                                                                disabled>
+                                                                placeholder="Fecha" disabled>
                                                             <span>Fecha</span>
                                                         </label>
                                                         @error('fecha')
@@ -423,13 +420,12 @@
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label class="has-float-label">
 
-                                        <select wire:model="iva_id"
-                                                wire:change="aplicarIva"
-                                                class="form-control hide-placeholder text-center" 
-                                                placeholder="Iva">
+                                        <select wire:model="iva_id" wire:change="aplicarIva"
+                                            class="form-control hide-placeholder text-center" placeholder="Iva">
 
                                             @foreach ($ivas as $item)
-                                                <option value="{{$item->id}}">{{$item->porcentaje}} %</option>
+                                                <option value="{{ $item->id }}">{{ $item->porcentaje }} %
+                                                </option>
                                             @endforeach
                                         </select>
                                         <span>Iva</span>
@@ -658,12 +654,27 @@
 
                             {{-- BOTON GENERAR ORDEN DE COMPRA --}}
                             <div class="row justify-content-end">
-                                <div class="col-12 col-md-3 col-lg-2">
-                                    <button wire:click="generarOrden" class="btn btn-primary form-control">
+                                <div class="col-12 col-md-7 col-lg-4">
+
+
+                                    <button wire:click="generarOrden" wire:loading.remove
+                                        class="btn btn-primary form-control">
                                         Generar orden de compra
                                     </button>
+
+                                    <!-- Se muestra mientra se completa la petición -->
+                                    <button disabled type="button" wire:loading.delay wire:target="generarOrden"
+                                        class="btn btn-primary btn-block form-control">
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        Guardando ...
+                                    </button>
+
                                 </div>
                             </div>
+
+
+
 
 
 
@@ -681,12 +692,13 @@
 </div>
 
 <script>
+    //import Swal from "sweetalert2";
+
     $(document).ready(() => {
 
         Livewire.on('siguienteInputFocus', (inputId) => {
             $(inputId).focus();
         })
-
 
     })
 

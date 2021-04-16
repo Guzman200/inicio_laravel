@@ -11,6 +11,14 @@ class DetalleOrdenCompra extends Model
 
     protected $table = "detalle_orden_de_compra";
 
+    protected $fillable = [
+        'descripcion',
+        'unidad',
+        'cantidad',
+        'valor_unitario',
+        'ordenes_de_compra_id'
+    ];
+
     // relacion con orden de compra
     public function ordenCompra(){
         return $this->belongsTo(OrdenCompra::class);
