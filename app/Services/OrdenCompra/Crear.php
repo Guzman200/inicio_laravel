@@ -7,25 +7,33 @@ use Illuminate\Support\Facades\Hash;
 
 class Crear {
 
-    private $nombres;
-    private $ap_paterno;
-    private $ap_materno;
-    private $nombre_usuario;
-    private $telefono;
-    private $email;
-    private $status;
-    private $password;
+    private $num_pagos;
+    private $num_facturas;
+    private $centro_costo;
+    private $cotizacion;
+    private $proyecto;
+    private $total;
+    private $total_neto;
+    private $subtotal;
+    private $descuento;
+    private $iva_id;
+    private $proveedor_id;
+    private $user_id;
 
     public function __construct(
         /*
-        $nombres, 
-        $ap_paterno, 
-        $ap_materno, 
-        $nombre_usuario, 
-        $telefono=NULL, 
-        $email, 
-        $status=false, 
-        $password
+        $num_pagos;
+        $num_facturas;
+        $centro_costo;
+        $cotizacion;
+        $proyecto;
+        $total;
+        $total_neto;
+        $subtotal;
+        $descuento;
+        $iva_id;
+        $proveedor_id;
+        $user_id;
         */
     )
     {

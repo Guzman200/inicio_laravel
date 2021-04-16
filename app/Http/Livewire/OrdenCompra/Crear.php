@@ -286,6 +286,9 @@ class Crear extends Component
     }
 
     /**
+     * Verifica si la suma de todos los pagos mas el que se quiere agregar
+     * sobrepasa el total de la orden de compra
+     * 
      * @return bool
      */
     public function sumaPagosSobrePasaTotalOrdenCompra()
