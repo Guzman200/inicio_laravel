@@ -24,6 +24,11 @@ class CreateOrdenesDeCompraTable extends Migration
             $table->float('total_neto');
             $table->float('subtotal');
             $table->float('descuento');
+            $table->string('status')->default('por pagar');
+            /*
+                por pagar
+                pagada
+            */
             $table->unsignedBigInteger('iva_id');
             $table->unsignedBigInteger('proveedores_id');
             $table->unsignedBigInteger('user_id');
