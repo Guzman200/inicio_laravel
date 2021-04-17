@@ -64,6 +64,10 @@ class PagoController extends Controller
     public function cambiarStatusAPagado(Pago $pago)
     {
 
+        if($pago->status == "pagado"){
+            return response()->json(["message" => "El pago ya se encuentra en estatus pagado."],422);
+        }
+
         $pago->status = "pagado";
         $pago->fecha_en_que_se_pago = Carbon::now();
         $pago->update();
@@ -75,6 +79,6 @@ class PagoController extends Controller
             $ordenCompra->update();
         }
 
-        return response()->json(["mensaje" => "estatus cambiado"],201);
+        return response()->json([],201);
     }
 }

@@ -14965,7 +14965,13 @@ $(document).ready(function () {
     "columnDefs": [{
       "targets": 7,
       "render": function render(data, type, row) {
-        return " \n                    <div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"Basic example\">\n                        <button data-pagar=\"".concat(row.id, "\" type=\"button\" class=\"btn btn-success\">\n                        <i class=\"fas fa-money-bill-wave\"></i>  Pagar</button>\n                    </div>\n                    ");
+        var disabled = "disabled";
+
+        if (row.fecha_en_que_se_pago == "Pendiente en pagar") {
+          disabled = "";
+        }
+
+        return " \n                    <div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"Basic example\">\n                        <button data-pagar=\"".concat(row.id, "\" type=\"button\" class=\"btn btn-success\" ").concat(disabled, ">\n                        <i class=\"fas fa-money-bill-wave\"></i>  Pagar</button>\n                    </div>\n                   \n                    ");
       }
     }]
   }); // Cuando el usuario marca como pagado un pago

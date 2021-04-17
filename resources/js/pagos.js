@@ -33,13 +33,21 @@ $(document).ready(() => {
             {
                 "targets": 7,
                 "render": function (data, type, row) {
+
+                    let disabled = "disabled";
+
+                   if(row.fecha_en_que_se_pago == "Pendiente en pagar"){
+                        disabled = "";
+                   }
+
                     return ` 
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        <button data-pagar="${row.id}" type="button" class="btn btn-success">
+                        <button data-pagar="${row.id}" type="button" class="btn btn-success" ${disabled}>
                         <i class="fas fa-money-bill-wave"></i>  Pagar</button>
                     </div>
+                   
                     `;
-                }
+                } 
             }
         ]
     })
