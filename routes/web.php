@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdenCompraController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\TipoPagoController;
 use App\Http\Controllers\UserController;
@@ -33,6 +34,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');
 
     Route::get('/ordenes_compra', [OrdenCompraController::class, 'index'])->name('ordenes_compra');
+
+    Route::get('/pagos', [PagoController::class, 'index'])->name('pagos');
 
 });
 

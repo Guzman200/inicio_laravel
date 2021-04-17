@@ -4,6 +4,7 @@
     "/js/formas_pago.js": "/js/formas_pago.js",
     "/js/login.js": "/js/login.js",
     "/js/orden_de_compra.js": "/js/orden_de_compra.js",
+    "/js/pagos.js": "/js/pagos.js",
     "/js/proveedores.js": "/js/proveedores.js",
     "/js/register.js": "/js/register.js",
     "/js/usuarios.js": "/js/usuarios.js"

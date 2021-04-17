@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -14913,10 +14913,10 @@ var datatablesJSON = {
 
 /***/ }),
 
-/***/ "./resources/js/login/register.js":
-/*!****************************************!*\
-  !*** ./resources/js/login/register.js ***!
-  \****************************************/
+/***/ "./resources/js/pagos.js":
+/*!*******************************!*\
+  !*** ./resources/js/pagos.js ***!
+  \*******************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14924,86 +14924,99 @@ var datatablesJSON = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../helpers.js */ "./resources/js/helpers.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
 
 
 $(document).ready(function () {
-  var formRegistro = $("#form-registro"); // abre el modal de registro y reinicia todos los valores y validaciones
+  var formBuscar = $("#form-busqueda");
+  var tablaPagos; // Inicializamos la tabla pagos
 
-  $("[data-openRegister]").click(function (event) {}); // envio de registro
+  tablaPagos = $("#tabla_pagos").DataTable({
+    "responsive": true,
+    "autoWidth": false,
+    "serverSide": true,
+    "language": _helpers__WEBPACK_IMPORTED_MODULE_1__["datatablesJSON"],
+    // Se traduce la datatables a español
+    "lengthChange": false,
+    // Ocultamos el paginado
+    "ajax": {
+      "url": "../pagos",
+      "type": "GET"
+    },
+    "columns": [{
+      "data": "id"
+    }, {
+      "data": "fecha"
+    }, {
+      "data": "fecha_en_que_se_pago"
+    }, {
+      "data": "status"
+    }, {
+      "data": "cantidad"
+    }, {
+      "data": "orden_de_compra.proyecto",
+      name: "ordenDeCompra.proyecto"
+    }, {
+      "data": "tipo_de_pago.descripcion",
+      name: "tipoDePago.descripcion"
+    }, {
+      "defaultContent": ""
+    }],
+    "columnDefs": [{
+      "targets": 7,
+      "render": function render(data, type, row) {
+        return " \n                    <div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"Basic example\">\n                        <button data-pagar=\"".concat(row.id, "\" type=\"button\" class=\"btn btn-success\">\n                        <i class=\"fas fa-money-bill-wave\"></i>  Pagar</button>\n                    </div>\n                    ");
+      }
+    }]
+  }); // Cuando el usuario marca como pagado un pago
 
-  formRegistro.on("submit", function (event) {
-    event.preventDefault(); // validacion de formulario
+  $(document).on("click", "button[data-pagar]", function () {
+    var pago_id = $(this).data("pagar");
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["sweetDelete"])("¿Marcar como pagado?", "\xA1Se cambiara a estatus pagado el pago <b>#".concat(pago_id, "</b>!"), function () {
+      modificarStatusPagoAPagado(pago_id);
+    }, 'warning', 'Si, Cambiar a estatus pagado!');
+  });
 
-    if (!formRegistro.valid()) {
-      return false;
-    } //var recaptcha = grecaptcha.getResponse();
-    //if (recaptcha.length == 0) {
-    // sweetInfo("Recaptacha obligatorio", "", "warning", 3000);
-    //return false;
-    //}
-
-
-    var form = new FormData(event.target);
-    Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["loaderIn"])();
-    axios.post("/api/register", form).then(function (response) {
-      console.log(response);
-      window.location.reload(); //modalRegistro.modal("hide");
-      //responseAxios(response);
+  function modificarStatusPagoAPagado(pago_id) {
+    var url = "/api/pago/".concat(pago_id, "/marcar-pagado");
+    var form = new FormData();
+    form.append('__method', 'put');
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["loaderIn"])();
+    axios.put(url, form).then(function (res) {
+      tablaPagos.ajax.reload(null, false);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["sweetInfo"])('Modificación de estatus correcta', '', 'success', '1800');
     })["catch"](function (_ref) {
       var response = _ref.response;
-      console.log(response); //grecaptcha.reset();
-
-      Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["responseAxios"])(response);
+      console.log(response);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["responseAxios"])(response);
     }).then(function () {
-      Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["loaderOut"])();
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["loaderOut"])();
     });
-  }); // validaciones modal registro
+  }
+  /** ================================> Datatables <=========================================  */
+  // Agregamos nuestro input personalizado para buscar en la datatable
 
-  formRegistro.validate({
-    rules: {
-      name: {
-        required: true,
-        //alphabet: true,
-        minlength: 5,
-        maxlength: 255
-      },
-      nombre_usuario: {
-        required: true,
-        minlength: 5,
-        maxlength: 255
-      },
-      email: {
-        required: true,
-        minlength: 2,
-        maxlength: 255
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      password_confirmation: {
-        equalTo: password
-      }
-    },
-    messages: {
-      password_confirmation: {
-        equalTo: 'Las contraseñas no coinciden'
-      }
-    }
+
+  $("#busqueda").on("keyup search input paste cut", function () {
+    tablaPagos.search(this.value).draw();
+  }); // En realidad esto no hace casi nada (Podria o no estar)
+
+  formBuscar.submit(function (event) {
+    event.preventDefault();
+    $("#busqueda").keyup();
   });
 });
 
 /***/ }),
 
-/***/ 7:
-/*!**********************************************!*\
-  !*** multi ./resources/js/login/register.js ***!
-  \**********************************************/
+/***/ 5:
+/*!*************************************!*\
+  !*** multi ./resources/js/pagos.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/login/register.js */"./resources/js/login/register.js");
+module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/pagos.js */"./resources/js/pagos.js");
 
 
 /***/ })

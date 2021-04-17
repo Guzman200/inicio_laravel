@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\TransportadorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::post('/transportadores', [TransportadorController::class, 'store']);
+    Route::put('/pago/{pago}/marcar-pagado', [PagoController::class, 'cambiarStatusAPagado']);
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

@@ -146,9 +146,18 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route('ordenes_compra')}}" class="nav-link {{request()->is('ordenes_compra') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-truck"></i>
+                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
                                 <p>
                                     Ordenes de compra
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('pagos')}}" class="nav-link {{request()->is('pagos') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-donate"></i>
+                                <p>
+                                    Pagos
                                     <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
@@ -164,7 +173,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route('formas_pago')}}" class="nav-link {{request()->is('formas_pago') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-wallet"></i>
                                 <p>
                                     Formas de pago
                                     <span class="right badge badge-danger">New</span>

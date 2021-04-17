@@ -18,6 +18,7 @@ class CreatePagosTable extends Migration
             $table->date('fecha');
             $table->float('cantidad');
             $table->string('status')->default('por pagar');
+            $table->date('fecha_en_que_se_pago')->nullable();
             /*
                 por pagar
                 pagado
