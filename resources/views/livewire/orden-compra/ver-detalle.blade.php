@@ -174,7 +174,8 @@
                                                             <th scope="col">#</th>
                                                             <th scope="col">Forma de pago</th>
                                                             <th scope="col">Monto</th>
-                                                            <th scope="col">Fecha</th>
+                                                            <th scope="col">Fecha del pago</th>
+                                                            <th scope="col">Fecha en que se pago</th>
                                                             <th scope="col">Estatus</th>
                                                         </tr>
                                                     </thead>
@@ -185,7 +186,14 @@
                                                                     <th scope="row">{{ $pago->id }}</th>
                                                                     <td>{{ $pago->tipoDePago->descripcion }}</td>
                                                                     <td>{{ $pago->cantidad }}</td>
-                                                                    <td>{{ $pago->fecha->formatLocalized('%A, %d de %B %Y')}}</td>
+                                                                    <td>{{ $pago->fecha->format('d-m-Y')}}</td>
+                                                                    <td>
+                                                                        @if(is_null($pago->fecha_en_que_se_pago))
+                                                                            Pendiente por pagar
+                                                                        @else
+                                                                            {{$pago->fecha_en_que_se_pago->format('d-m-Y')}}
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         @if ($pago->status == 'por pagar')
                                                                             <span class="badge badge-warning">Por

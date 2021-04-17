@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrdenCompra;
 use App\Models\Pago;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -66,6 +67,13 @@ class PagoController extends Controller
         $pago->status = "pagado";
         $pago->fecha_en_que_se_pago = Carbon::now();
         $pago->update();
+
+        $ordenCompra = OrdenCompra::findOrFail($pago->ordenes_de_compra_id);
+
+        if($ordenCompra->getNumeroPagosPagados() == $ordenCompra->num_pagos){
+            $ordenCompra->status = "pagada";
+            $ordenCompra->update();
+        }
 
         return response()->json(["mensaje" => "estatus cambiado"],201);
     }

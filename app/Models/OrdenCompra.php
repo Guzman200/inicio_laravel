@@ -64,8 +64,4 @@ class OrdenCompra extends Model
         return $total;
     }
 
-    public function getFechaYMD()
-    {
-
-    }
 }
