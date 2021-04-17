@@ -1,14 +1,12 @@
 @extends('layouts.crud')
 
 @section('styles')
-    @livewireStyles
+    
 @endsection
 
 @section('nombre_modulo', 'Pagos')
 
-@section('data_modal', 'data-add_proveedor=""')
-
-@section('nombre_boton', 'Nuevo pago')
+@section('add_class', 'd-none')
 
 @section('id_tabla', 'tabla_pagos')
 
@@ -23,13 +21,7 @@
     <th scope="col">Acciones</th>
 @endsection
 
-@section('componentes_livewire')
 
-{{--}
-    @livewire('proveedor.crear-editar')
---}}}
-
-@endsection
 
 @section('scripts')
     <script src="{{ asset('js/pagos.js') }}"></script>
