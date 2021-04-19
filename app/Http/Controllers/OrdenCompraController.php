@@ -34,6 +34,8 @@ class OrdenCompraController extends Controller
                             "; 
                     
                     
+                })->addColumn('pagos_pagados', function(OrdenCompra $orden){
+                    return $orden->getNumeroPagosPagados();
                 })
                 ->rawColumns(['barra_pago'])
                 ->toJson();

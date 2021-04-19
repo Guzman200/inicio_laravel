@@ -34,13 +34,21 @@ $(document).ready(() => {
             {
                 "targets": 8,
                 "render": function ( data, type, row ) {
+                    console.log(row.pagos_pagados);
+
+                    let editar = `<a class="dropdown-item" href="#" data-edit_orden_compra='${row.id}'>Editar</a>`;
+
+                    if(row.pagos_pagados > 0){
+                        editar = "";
+                    }
+
                     return ` 
                     <button class="btn btn-sm" type="button" 
                             data-toggle="dropdown"  aria-expanded="false">
                             <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#" data-edit_orden_compra='${row.id}'>Editar</a>
+                        ${editar}
                         <a class="dropdown-item" href="#" data-delete_orden_compra='${row.id}'>Eliminar</a>
                         <a class="dropdown-item" href="#" data-ver_detalle='${row.id}'>Ver detalle</a>
                     </div>`;
