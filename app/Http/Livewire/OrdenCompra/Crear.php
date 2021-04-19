@@ -157,6 +157,17 @@ class Crear extends Component
         });
     }
 
+    public function eliminar($id)
+    {
+        $orden = OrdenCompra::find($id);
+        // Si existe la orden
+        if($orden){
+            $orden->delete();
+            $this->emit('actualizar_tabla');
+            $this->emit('sweetAlert', 'Orden de compra eliminada', '', 'success');
+        }
+    }
+
     /**
      * Cuando se presiona el boton de la vista "Nueva orden de compra"
      * 

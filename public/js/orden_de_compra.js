@@ -14965,7 +14965,7 @@ $(document).ready(function () {
     "columnDefs": [{
       "targets": 8,
       "render": function render(data, type, row) {
-        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_proveedor='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_proveedor='").concat(row.id, "' data-nombre='").concat(row.nombre, "'>Eliminar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-ver_detalle='").concat(row.id, "'>Ver detalle</a>\n                    </div>");
+        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_orden_compra='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_orden_compra='").concat(row.id, "'>Eliminar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-ver_detalle='").concat(row.id, "'>Ver detalle</a>\n                    </div>");
       }
     }]
   }); // Agregar un nueva nueva ordend de compra
@@ -14977,12 +14977,11 @@ $(document).ready(function () {
   $(document).on('click', 'a[data-edit_proveedor]', function () {
     var id = $(this).data("edit_proveedor");
     Livewire.emit('editar', id);
-  }); /// Eliminar transportador
+  }); /// Eliminar una orden de compra
 
-  $(document).on('click', 'a[data-delete_proveedor]', function () {
-    var id = $(this).data("delete_proveedor");
-    var nombre = $(this).data("nombre");
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["sweetDelete"])("¿Eliminar transportador?", "\xA1Se eliminara el proveedor <b>".concat(nombre, "</b>!"), function () {
+  $(document).on('click', 'a[data-delete_orden_compra]', function () {
+    var id = $(this).data("delete_orden_compra");
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["sweetDelete"])("¿Eliminar orden de compra?", "\xA1Se la orden #<b>".concat(id, "</b>!"), function () {
       Livewire.emit('eliminar', id);
     });
   });

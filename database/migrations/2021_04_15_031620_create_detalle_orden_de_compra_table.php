@@ -23,7 +23,8 @@ class CreateDetalleOrdenDeCompraTable extends Migration
 
             $table->foreign('ordenes_de_compra_id')
                 ->references('id')
-                ->on('ordenes_de_compra');
+                ->on('ordenes_de_compra')
+                ->cascadeOnDelete();
                 
             $table->timestamps();
         });

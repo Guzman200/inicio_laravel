@@ -38,13 +38,15 @@ class PagoController extends Controller
 
                     if ($pago->status == "por pagar") {
 
-                        $fecha = new Carbon($pago->fecha);
-
-                        // Si la fecha del pago es mayor a la actual (es decir el pago ya vencio)
-                        if ($fecha->gte(Carbon::now())) {
-                            return '<span class="badge badge-warning">Por pagar</span>';
+                        // Obtenemos la fecha actual
+                        $fecha_hoy = Carbon::today();
+ 
+                        // Si la fecha actual es mayor a la del pago (es decir el pago ya vencio)
+                        if ($fecha_hoy->gt($pago->fecha)) {
+                            return '<span class="badge badge-danger">Pago vencido</span>';
                         }
-                        return '<span class="badge badge-danger">Por pagar</span>';
+
+                        return '<span class="badge badge-warning">Por pagar</span>';
                     }
 
                     return '<span class="badge badge-success">Pagado</span>';

@@ -40,8 +40,8 @@ $(document).ready(() => {
                             <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#" data-edit_proveedor='${row.id}'>Editar</a>
-                        <a class="dropdown-item" href="#" data-delete_proveedor='${row.id}' data-nombre='${row.nombre}'>Eliminar</a>
+                        <a class="dropdown-item" href="#" data-edit_orden_compra='${row.id}'>Editar</a>
+                        <a class="dropdown-item" href="#" data-delete_orden_compra='${row.id}'>Eliminar</a>
                         <a class="dropdown-item" href="#" data-ver_detalle='${row.id}'>Ver detalle</a>
                     </div>`;
                 }
@@ -66,13 +66,12 @@ $(document).ready(() => {
         
     })
 
-    /// Eliminar transportador
-    $(document).on('click', 'a[data-delete_proveedor]', function () {
+    /// Eliminar una orden de compra
+    $(document).on('click', 'a[data-delete_orden_compra]', function () {
 
-        let id = $(this).data("delete_proveedor");
-        let nombre = $(this).data("nombre");
+        let id = $(this).data("delete_orden_compra");
 
-        sweetDelete("¿Eliminar transportador?", `¡Se eliminara el proveedor <b>${nombre}</b>!`, function () {
+        sweetDelete("¿Eliminar orden de compra?", `¡Se la orden #<b>${id}</b>!`, function () {
             Livewire.emit('eliminar', id);
         });
 
