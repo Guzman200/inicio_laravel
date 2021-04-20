@@ -254,9 +254,9 @@
                                                                     <td>{{ $factura->nombre_factura}}</td>
                                                                     <td>{{ $factura->created_at->format('d-m-Y') }}</td>
                                                                     <td>
-                                                                        <button title="Descargar factura" class="btn btn-sm btn-primary">
+                                                                        <a href="{{route("descargarFactura", ['factura' => $factura->id])}}" title="Descargar factura" class="btn btn-sm btn-primary">
                                                                             <span class="fas fa-download"></span>
-                                                                        </button>
+                                                                        </a>
                                                                     </td>
                                                                     
                                                                 </tr>
