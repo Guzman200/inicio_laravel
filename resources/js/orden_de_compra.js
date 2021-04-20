@@ -51,11 +51,13 @@ $(document).ready(() => {
                         ${editar}
                         <a class="dropdown-item" href="#" data-delete_orden_compra='${row.id}'>Eliminar</a>
                         <a class="dropdown-item" href="#" data-ver_detalle='${row.id}'>Ver detalle</a>
+                        <a class="dropdown-item" href="/ordenes_compra/subir-facturas/${row.id}">Adjuntar facturas</a>
                     </div>`;
                 }
             }
         ]
     })
+    
 
     
     // Agregar un nueva nueva ordend de compra

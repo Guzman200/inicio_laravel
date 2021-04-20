@@ -162,6 +162,14 @@ class Crear extends Component
         $orden = OrdenCompra::find($id);
         // Si existe la orden
         if($orden){
+
+            // Obtenemos todas las facturas adjuntas de la orden
+            foreach($orden->facturas as $factura)
+            {
+                // Eliminamos los PDF
+                unlink($factura->direccion_factura);
+            }
+
             $orden->delete();
             $this->emit('actualizar_tabla');
             $this->emit('sweetAlert', 'Orden de compra eliminada', '', 'success');

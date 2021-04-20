@@ -34,6 +34,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios');
 
     Route::get('/ordenes_compra', [OrdenCompraController::class, 'index'])->name('ordenes_compra');
+    
+    Route::get('/ordenes_compra/subir-facturas/{orden}', [OrdenCompraController::class, 'subirFacturas'])
+        ->name('subirFacturas');
+
+    Route::post('/ordenes_compra/subir-facturas/{orden}', [OrdenCompraController::class, 'subirFacturasPOST'])
+        ->name('subirFacturasPOST');
 
     Route::get('/pagos', [PagoController::class, 'index'])->name('pagos');
 

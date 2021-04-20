@@ -14972,7 +14972,7 @@ $(document).ready(function () {
           editar = "";
         }
 
-        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        ".concat(editar, "\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_orden_compra='").concat(row.id, "'>Eliminar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-ver_detalle='").concat(row.id, "'>Ver detalle</a>\n                    </div>");
+        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        ".concat(editar, "\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_orden_compra='").concat(row.id, "'>Eliminar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-ver_detalle='").concat(row.id, "'>Ver detalle</a>\n                        <a class=\"dropdown-item\" href=\"/ordenes_compra/subir-facturas/").concat(row.id, "\">Adjuntar facturas</a>\n                    </div>");
       }
     }]
   }); // Agregar un nueva nueva ordend de compra

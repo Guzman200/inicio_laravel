@@ -186,12 +186,12 @@
                                                                     <th scope="row">{{ $pago->id }}</th>
                                                                     <td>{{ $pago->tipoDePago->descripcion }}</td>
                                                                     <td>{{ $pago->cantidad }}</td>
-                                                                    <td>{{ $pago->fecha->format('d-m-Y')}}</td>
+                                                                    <td>{{ $pago->fecha->format('d-m-Y') }}</td>
                                                                     <td>
-                                                                        @if(is_null($pago->fecha_en_que_se_pago))
+                                                                        @if (is_null($pago->fecha_en_que_se_pago))
                                                                             Pendiente por pagar
                                                                         @else
-                                                                            {{$pago->fecha_en_que_se_pago->format('d-m-Y')}}
+                                                                            {{ $pago->fecha_en_que_se_pago->format('d-m-Y') }}
                                                                         @endif
                                                                     </td>
                                                                     <td>
@@ -216,14 +216,37 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- FACTURAS DE LA ORDEN DE COMPRA DE LA ORDEN DE COMPRA --}}
+                        <div class="card">
+                            <div class="card-header bg-teal" id="headingThree">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapseFacturas" aria-expanded="false"
+                                        aria-controls="collapseFacturas">
+                                        <span class="fas fa-angle-down"></span>
+                                        Facturas de la orden de compra
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseFacturas" class="collapse" aria-labelledby="headingThree"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+
+                                    @php
+                                        $id = 2;
+                                        if ($orden) {
+                                            $id = $orden->id;
+                                        }
+                                    @endphp
+
+                                    
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
-
-
-
-
-
 
                 </div>
 
@@ -236,6 +259,7 @@
 
 <script>
     $(document).ready(() => {
+
 
         // Ver detalle de orden de compra
         $(document).on('click', 'a[data-ver_detalle]', function() {

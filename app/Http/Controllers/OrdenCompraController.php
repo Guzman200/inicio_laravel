@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Factura;
 use App\Models\OrdenCompra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use SebastianBergmann\Timer\Timer;
 
 class OrdenCompraController extends Controller
 {
@@ -42,5 +45,31 @@ class OrdenCompraController extends Controller
         }
 
         return view('ordenes_de_compra');
+    }
+
+    public function subirFacturas(Request $request, OrdenCompra $orden)
+    {
+        return view("subir_facturas", compact("orden"));
+    }
+
+    public function subirFacturasPOST(Request $request, OrdenCompra $orden)
+    {
+        if($request->hasFile("file")){
+
+
+            $facturaPDF = $request->file("file");
+
+            $nombreArchivo = $facturaPDF->getClientOriginalName();
+
+            $ruta = storage_path("app/public/ordenes_de_compra/$orden->id");
+
+            $facturaPDF->move($ruta, $nombreArchivo);
+
+            Factura::create([
+                'direccion_factura' => $ruta . "/" . $nombreArchivo,
+                'ordenes_de_compra_id' => $orden->id
+            ]);
+
+        }
     }
 }

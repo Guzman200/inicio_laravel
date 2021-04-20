@@ -37,6 +37,12 @@ class OrdenCompra extends Model
         return $this->hasMany(Pago::class, 'ordenes_de_compra_id', 'id');
     }
 
+    // relacion con facturas
+    public function facturas()
+    {
+        return $this->hasMany(Factura::class, 'ordenes_de_compra_id', 'id');
+    }
+
     // relacion con iva
     public function iva()
     {
