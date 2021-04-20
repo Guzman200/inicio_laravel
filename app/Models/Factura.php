@@ -13,6 +13,7 @@ class Factura extends Model
 
     protected $fillable = [
         'direccion_factura',
-        'ordenes_de_compra_id'
+        'ordenes_de_compra_id',
+        'nombre_factura'
     ];
 }

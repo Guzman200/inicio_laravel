@@ -233,14 +233,44 @@
                                 data-parent="#accordionExample">
                                 <div class="card-body">
 
-                                    @php
-                                        $id = 2;
-                                        if ($orden) {
-                                            $id = $orden->id;
-                                        }
-                                    @endphp
+                                    <!-- FACTURAS DE LA ORDEN DE COMPRA -->
+                                    <div class="row mt-4">
+                                        <div class="col-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Factura</th>
+                                                            <th scope="col">Fecha en que se adjunto</th>
+                                                            <th scope="col">Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @if ($orden)
+                                                        <tbody>
+                                                            @foreach ($orden->facturas as $factura)
+                                                                <tr>
+                                                                    <th scope="row">{{ $factura->id }}</th>
+                                                                    <td>{{ $factura->nombre_factura}}</td>
+                                                                    <td>{{ $factura->created_at->format('d-m-Y') }}</td>
+                                                                    <td>
+                                                                        <button title="Descargar factura" class="btn btn-sm btn-primary">
+                                                                            <span class="fas fa-download"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                            @endforeach
 
-                                    
+                                                        </tbody>
+                                                    @endif
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                   
+
 
 
                                 </div>

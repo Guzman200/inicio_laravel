@@ -66,6 +66,7 @@ class OrdenCompraController extends Controller
             $facturaPDF->move($ruta, $nombreArchivo);
 
             Factura::create([
+                'nombre_factura' => $nombreArchivo,
                 'direccion_factura' => $ruta . "/" . $nombreArchivo,
                 'ordenes_de_compra_id' => $orden->id
             ]);
