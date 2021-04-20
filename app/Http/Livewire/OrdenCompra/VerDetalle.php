@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\OrdenCompra;
 
+use App\Models\Factura;
 use App\Models\OrdenCompra;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -24,5 +25,16 @@ class VerDetalle extends Component
         
         $this->orden_id = $id;
         $this->emit( 'abrirModalDetalle');
+    }
+
+    public function eliminarFactura($id)
+    {
+        $factura = Factura::find($id);
+
+        if($factura)
+        {
+            unlink($factura->direccion_factura);
+            $factura->delete();
+        }
     }
 }

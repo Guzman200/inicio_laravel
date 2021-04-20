@@ -11,4 +11,5 @@ class FacturaController extends Controller
     {
         return response()->download($factura->direccion_factura, 'factura.pdf');
     }
+
 }

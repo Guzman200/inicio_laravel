@@ -15,10 +15,10 @@
 
                 <div class="modal-body">
 
-                    <div class="accordion" id="accordionExample">
+                    <div wire:ignore.self class="accordion" id="accordionExample">
 
                         {{-- DATOS DE LA ORDEN DE COMPRA --}}
-                        <div class="card">
+                        <div wire:ignore.self class="card">
                             <div class="card-header bg-teal" id="headingOne">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link btn-block text-left" type="button"
@@ -93,7 +93,7 @@
                         </div>
 
                         {{-- DETALLE DE ORDEN DE COMPRA --}}
-                        <div class="card">
+                        <div wire:ignore.self class="card">
                             <div class="card-header bg-teal" id="headingTwo">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link btn-block text-left collapsed" type="button"
@@ -149,7 +149,7 @@
                         </div>
 
                         {{-- PAGOS DE LA ORDEN DE COMPRA --}}
-                        <div class="card">
+                        <div wire:ignore.self class="card">
                             <div class="card-header bg-teal" id="headingThree">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link btn-block text-left collapsed" type="button"
@@ -218,7 +218,7 @@
                         </div>
 
                         {{-- FACTURAS DE LA ORDEN DE COMPRA DE LA ORDEN DE COMPRA --}}
-                        <div class="card">
+                        <div wire:ignore.self class="card">
                             <div class="card-header bg-teal" id="headingThree">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link btn-block text-left collapsed" type="button"
@@ -243,7 +243,8 @@
                                                             <th scope="col">#</th>
                                                             <th scope="col">Factura</th>
                                                             <th scope="col">Fecha en que se adjunto</th>
-                                                            <th scope="col">Acciones</th>
+                                                            <th scope="col">Descargar</th>
+                                                            <th scope="col">Eliminar</th>
                                                         </tr>
                                                     </thead>
                                                     @if ($orden)
@@ -258,7 +259,14 @@
                                                                             <span class="fas fa-download"></span>
                                                                         </a>
                                                                     </td>
-                                                                    
+                                                                    <td>
+                                                                        <button 
+                                                                            wire:click="eliminarFactura('{{$factura->id}}')"
+                                                                            title="Eliminar factura" 
+                                                                            class="btn btn-sm btn-danger">
+                                                                            <span class="fas fa-trash-alt"></span>
+                                                                        </button>
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
 
@@ -268,10 +276,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                   
-
-
 
                                 </div>
                             </div>
