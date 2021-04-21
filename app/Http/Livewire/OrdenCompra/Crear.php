@@ -101,6 +101,7 @@ class Crear extends Component
         }
 
         $this->crearOrden();
+        $this->limpiarDatos();
 
         $this->emit('actualizar_tabla');
         $this->emit('sweetAlert', 'Orden de compra creada', '', 'success');
@@ -184,6 +185,8 @@ class Crear extends Component
      */
     public function agregar()
     {
+
+        $this->limpiarDatos();
 
         $this->tipoOperacion = 1; // agregar
 
@@ -571,6 +574,53 @@ class Crear extends Component
             'centro_costo' => 'required',
             'proyecto'     => 'required'
         ], [], ['centro_costo' => 'centro de costo']);
+    }
+
+    public function limpiarDatos()
+    {
+
+
+         //
+        $this->tipoOperacion = null; // 1 es crear, 2 es editar
+        $this->orden_id      = null;
+
+        // Datos del proveedor
+        $this->proveedor_id = "";
+        $this->proveedor    = null;
+        $this->rut          = null;
+        $this->giro         = null;
+        $this->direccion    = null;
+        $this->telefono     = null;
+        $this->contacto     = null;
+
+
+        // Datos de la orden de compra
+        $this->cotizacion            = null;
+        $this->fecha                 = null;
+        $this->centro_costo          = null;
+        $this->proyecto              = null;
+        $this->observaciones         = null;
+        $this->subtotal              = 0;
+        $this->total_neto            = 0;
+        $this->descuento             = 0; // en porcentaje
+        $this->descuento_en_cantidad = 0;
+        $this->iva_id                = 1; // default 0%
+        $this->iva_en_cantidad       = 0;
+        $this->total                 = 0;
+
+        // Datos para los items de la orden de compra
+        $this->items          = [];
+        $this->descripcion    = null;
+        $this->cantidad       = null;
+        $this->valor_unitario = null;
+        $this->unidad         = null;
+
+        // Datos para los pagos
+        $this->pagos = [];
+        $this->monto_pago   = null;
+        $this->fecha_pago   = null;
+        $this->tipo_pago_id = null;
+
     }
 
     /**
