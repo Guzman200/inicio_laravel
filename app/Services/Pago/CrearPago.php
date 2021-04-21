@@ -27,6 +27,7 @@ class CrearPago
 
     public function crear()
     {
+
         $pago = Pago::create([
             'fecha'                => $this->fecha,
             'cantidad'             => $this->cantidad,

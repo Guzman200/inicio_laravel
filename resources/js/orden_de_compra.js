@@ -36,7 +36,7 @@ $(document).ready(() => {
                 "render": function ( data, type, row ) {
                     console.log(row.pagos_pagados);
 
-                    let editar = `<a class="dropdown-item" href="#" data-edit_orden_compra='${row.id}'>Editar</a>`;
+                    let editar = `<a class="dropdown-item" href="#" data-edit_orden_de_compra='${row.id}'>Editar</a>`;
 
                     if(row.pagos_pagados > 0){
                         editar = "";
@@ -60,7 +60,7 @@ $(document).ready(() => {
     
 
     
-    // Agregar un nueva nueva ordend de compra
+    // Agregar una nueva nueva ordend de compra
     $("button[data-add_orden_de_compra]")
         .off()
         .click(function () {
@@ -68,10 +68,10 @@ $(document).ready(() => {
         });
 
 
-    // Editar un proveedor
-    $(document).on('click', 'a[data-edit_proveedor]', function () {
+    // Editar una orden de compra
+    $(document).on('click', 'a[data-edit_orden_de_compra]', function () {
 
-        let id = $(this).data("edit_proveedor");
+        let id = $(this).data("edit_orden_de_compra");
         Livewire.emit('editar',id);
         
     })

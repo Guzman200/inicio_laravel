@@ -24,7 +24,8 @@ class OrdenCompra extends Model
         'iva_id',
         'proveedores_id',
         'user_id',
-        'status'
+        'status',
+        'observaciones'
     ];
 
     // relacion con detalle orden de compra

@@ -2,18 +2,24 @@
 
 namespace App\Http\Livewire\OrdenCompra;
 
-
+use App\Models\DetalleOrdenCompra;
 use App\Models\Iva;
 use App\Models\OrdenCompra;
+use App\Models\Pago;
 use App\Models\Proveedor;
 use App\Models\TipoPago;
 use App\Services\OrdenCompra\CrearOrdenCompra;
+use App\Services\OrdenCompra\EditarOrdenCompra;
 use App\Services\Pago\CrearPago;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Crear extends Component
 {
+
+    //
+    public $tipoOperacion; // 1 es crear, 2 es editar
+    public $orden_id = null;
 
     // Datos del proveedor
     public $proveedor_id = "";
@@ -82,7 +88,7 @@ class Crear extends Component
     {
 
         $this->validarProveedorYCotizacion();
-        $this->validarCentroCostoYProtecto();
+        $this->validarCentroCostoYProyecto();
 
         if (!$this->hayItemsEnLaOrden()) {
             session()->flash('error', 'No hay items en la orden de compra.');
@@ -139,7 +145,7 @@ class Crear extends Component
             }
 
             // Guardamos los pagos de la orden
-            foreach($this->pagos as $item){
+            foreach ($this->pagos as $item) {
 
                 $pago = new CrearPago(
                     $item['fecha'],
@@ -149,11 +155,7 @@ class Crear extends Component
                 );
 
                 $pago->crear();
-
             }
-
-
-
         });
     }
 
@@ -161,11 +163,10 @@ class Crear extends Component
     {
         $orden = OrdenCompra::find($id);
         // Si existe la orden
-        if($orden){
+        if ($orden) {
 
             // Obtenemos todas las facturas adjuntas de la orden
-            foreach($orden->facturas as $factura)
-            {
+            foreach ($orden->facturas as $factura) {
                 // Eliminamos los PDF
                 unlink($factura->direccion_factura);
             }
@@ -184,11 +185,175 @@ class Crear extends Component
     public function agregar()
     {
 
+        $this->tipoOperacion = 1; // agregar
+
         // Limpiamos los errores de validacion en caso existan
         $this->resetErrorBag();
         $this->resetValidation();
 
         $this->emit('abrirModal');
+    }
+
+    /**
+     * Cuando se presiona el boton de la vista "Editar"
+     * 
+     * @return void
+     */
+    public function editar($id)
+    {
+        $this->tipoOperacion = 2; // editar
+
+        $orden = OrdenCompra::find($id);
+
+        if ($orden) {
+
+            $this->orden_id = $orden->id;
+
+            // Mapeamos los datos del proveedor
+            $this->proveedor_id = $orden->proveedor->id;
+            $this->proveedor    = $orden->proveedor->proveedor;
+            $this->rut          = $orden->proveedor->rut;
+            $this->giro         = $orden->proveedor->giro;
+            $this->direccion    = $orden->proveedor->direccion;
+            $this->telefono     = $orden->proveedor->telefono;
+            $this->contacto     = $orden->proveedor->contacto;
+
+            // Mapeamos los datos de la orden de compra
+            $this->cotizacion            = $orden->cotizacion;
+            $this->fecha                 = $orden->fecha;
+            $this->centro_costo          = $orden->centro_costo;
+            $this->proyecto              = $orden->proyecto;
+            $this->observaciones         = $orden->observaciones;
+            $this->subtotal              = $orden->subtotal;  
+            $this->total_neto            = $orden->total_neto;
+            $this->descuento             = $orden->descuento; // en porcentaje
+            $this->descuento_en_cantidad = ($orden->subtotal * $orden->descuento) / 100;
+            $this->iva_id                = $orden->iva_id;
+            $this->iva_en_cantidad       = ($orden->total_neto * $orden->iva->porcentaje) / 100;
+            $this->total                 = $orden->total;
+
+            $this->items = [];
+
+            // Mapeamos los items de la orden de compra
+            foreach ($orden->detalleOrdenCompra as $item){
+
+                // Agregamos el item
+                $this->items[] = [
+                    'id'             => $item->id,
+                    'descripcion'    => $item->descripcion,
+                    'cantidad'       => $item->cantidad,
+                    'valor_unitario' => $item->valor_unitario,
+                    'unidad'         => $item->unidad,
+                    'valor_total'    => $item->cantidad * $item->valor_unitario
+                ];
+
+            }
+
+            $this->pagos = [];
+
+            // Mapeamos los pagos
+            foreach($orden->pagos as $pago)
+            {
+                $this->pagos[] = [
+                    'id'           => $pago->id,
+                    'monto'        => $pago->cantidad,
+                    'fecha'        => $pago->fecha->format('Y-m-d'),
+                    'tipo_pago_id' => $pago->tipos_de_pago_id,
+                    'descripcion'  => $pago->tipoDePago->descripcion
+                ];
+            }
+           
+
+            // Limpiamos los errores de validacion en caso existan
+            $this->resetErrorBag();
+            $this->resetValidation();
+
+            $this->emit('abrirModal');
+        }
+    }
+
+    /**
+     * Cuando el usuario presiona editar orden de compra (ya para guardar los cambios)
+     */
+    public function editarOrden()
+    {
+
+        $this->validarProveedorYCotizacion();
+        $this->validarCentroCostoYProyecto();
+
+        if (!$this->hayItemsEnLaOrden()) {
+            session()->flash('error', 'No hay items en la orden de compra.');
+            return 0;
+        }
+
+        if (!$this->estanLosPagosDistribuidosCorrectamente()) {
+            session()->flash('error', 'Los pagos no esta distribuidos correctamente.');
+            return 0;
+        }
+
+        $this->editarOrdenCasoUso();
+
+        $this->emit('actualizar_tabla');
+        $this->emit('sweetAlert', 'Orden de compra actualizada', '', 'success');
+
+    }
+
+    private function editarOrdenCasoUso()
+    {
+        $num_pagos = count($this->pagos);
+        $user_id = auth()->user()->id;
+
+        $editarOrden = new EditarOrdenCompra(
+            $this->orden_id,
+            $num_pagos,
+            0,
+            $this->centro_costo,
+            $this->cotizacion,
+            $this->proyecto,
+            $this->total,
+            $this->total_neto,
+            $this->subtotal,
+            $this->descuento,
+            $this->iva_id,
+            $this->proveedor_id,
+            $user_id,
+            $this->observaciones
+        );
+
+        DB::transaction(function () use ($editarOrden) {
+
+            // Editamos la orden de compra
+            $orden = $editarOrden->editar();
+
+            // Eliminamos todos los detalles
+            DetalleOrdenCompra::where('ordenes_de_compra_id',$orden->id)->delete();
+
+            // Creamos los nuevos detalles
+            foreach ($this->items as $item) {
+
+                $editarOrden->crearDetalle(
+                    $item['descripcion'],
+                    $item['unidad'],
+                    $item['cantidad'],
+                    $item['valor_unitario'],
+                );
+            }
+           
+            // Eliminamos todos los pagos
+            Pago::where('ordenes_de_compra_id',$orden->id)->delete();
+           
+            // Creamos los nuevos pagos
+            foreach ($this->pagos as $item) {
+                $pago = new CrearPago(
+                    $item['fecha'],
+                    $item['monto'],
+                    $orden->id,
+                    $item['tipo_pago_id'],
+                );
+
+                $pago->crear();
+            }
+        });
     }
 
     public function actualizarDatosProveedor()
@@ -399,7 +564,7 @@ class Crear extends Component
         ], [], ['proveedor_id' => 'proveedor', 'cotizacion' => 'cotización']);
     }
 
-    public function validarCentroCostoYProtecto()
+    public function validarCentroCostoYProyecto()
     {
         // Validamos los datos de la orden de compra
         $this->validate([

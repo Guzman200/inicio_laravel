@@ -20,6 +20,7 @@ class CreateOrdenesDeCompraTable extends Migration
             $table->string('centro_costo');
             $table->string('cotizacion');
             $table->string('proyecto');
+            $table->string('observaciones')->nullable();
             $table->float('total');
             $table->float('total_neto');
             $table->float('subtotal');

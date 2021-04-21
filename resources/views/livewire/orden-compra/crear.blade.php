@@ -7,7 +7,9 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Crear orden de compra</h5>
+                    <h5 class="modal-title">
+                        {{ $tipoOperacion == 1 ? 'Crear orden de compra' : 'Editar orden de compra'}}
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -657,13 +659,24 @@
                                 <div class="col-12 col-md-7 col-lg-4">
 
 
-                                    <button wire:click="generarOrden" wire:loading.remove
+                                    <button  
+                                        @if($tipoOperacion == 1)
+                                            wire:click="generarOrden"
+                                        @else
+                                            wire:click="editarOrden"
+                                        @endif
+                                        wire:loading.remove
                                         class="btn btn-primary form-control">
-                                        Generar orden de compra
+                                        {{ $tipoOperacion == 1 ? 'Generar orden de compra' : 'Guardar cambios'}}
                                     </button>
 
                                     <!-- Se muestra mientra se completa la petición -->
-                                    <button disabled type="button" wire:loading.delay wire:target="generarOrden"
+                                    <button disabled type="button" wire:loading.delay 
+                                        @if($tipoOperacion == 1)
+                                            wire:target="generarOrden"
+                                        @else
+                                            wire:target="editarOrden"
+                                        @endif
                                         class="btn btn-primary btn-block form-control">
                                         <span class="spinner-border spinner-border-sm" role="status"
                                             aria-hidden="true"></span>
