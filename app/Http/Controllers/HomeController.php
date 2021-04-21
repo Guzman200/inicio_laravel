@@ -33,7 +33,10 @@ class HomeController extends Controller
         $ordenes          = OrdenCompra::count();
         $usuarios         = User::where('status',true)->count();
 
-        return view('home', compact('pagos_pendientes','proveedores','ordenes','usuarios'));
+        // Obtenemos las ultimas ordenes de compra
+        $ordenes_compra = OrdenCompra::latest()->take(10)->get();
+
+        return view('home', compact('pagos_pendientes','proveedores','ordenes','usuarios','ordenes_compra'));
     }
 
     public function formato()
