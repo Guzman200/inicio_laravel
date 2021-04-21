@@ -146,7 +146,8 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route('ordenes_compra')}}" class="nav-link {{request()->is('ordenes_compra') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <!-- fas fa-file-invoice-dollar -->
                                 <p>
                                     Ordenes de compra
                                     <span class="right badge badge-danger">New</span>

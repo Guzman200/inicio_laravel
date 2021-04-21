@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Factura;
 use App\Models\OrdenCompra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use SebastianBergmann\Timer\Timer;
 
@@ -72,5 +73,41 @@ class OrdenCompraController extends Controller
             ]);
 
         }
+    }
+
+    /**
+     * Retorna un arreglo con las ordenes generadas en cada mes del año actual
+     */
+    public function graficaOrdenDeCompra()
+    {
+        /*
+        SELECT COUNT('id') as total, DATE_FORMAT(created_at, '%Y') as anio, DATE_FORMAT(created_at, '%m') as mes
+        FROM `ordenes_de_compra` 
+        GROUP BY mes
+        HAVING anio = 2021
+        */
+
+        // Cada pos representa un mes
+        $meses = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+        // Consultamos cuantas ordenes de compra se realizaron por mes del año actual
+        $ordenes = OrdenCompra::select(DB::raw("COUNT('id') as total, DATE_FORMAT(created_at, '%m') as mes"))
+            ->whereYear('created_at', date('Y'))
+            ->groupBy('mes')
+            ->orderBy('mes')
+            ->get();
+
+        
+        // Establemos los valores a los meses
+        foreach($ordenes as $orden){
+
+            $pos = (int) $orden->mes;
+
+           $meses[$pos-1] = $orden->total;
+            
+        }
+
+        return response()->json($meses);
+
     }
 }

@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/orden_de_compra.js', 'public/js')
     .js('resources/js/usuarios.js', 'public/js')
     .js('resources/js/pagos.js', 'public/js')
+    .js('resources/js/home.js', 'public/js')
     // js's de login
     .js('resources/js/login/login.js', 'public/js')
     .js('resources/js/login/register.js', 'public/js')

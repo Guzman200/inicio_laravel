@@ -49,6 +49,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('descargar-facturas/{factura}', [FacturaController::class, 'descargarFactura'])
             ->name('descargarFactura');
 
+        Route::get('anio-actual-datos-grafica', [OrdenCompraController::class, 'graficaOrdenDeCompra'])
+            ->name('graficaOrdenDeCompra');
+
+
+
     });
 
 
