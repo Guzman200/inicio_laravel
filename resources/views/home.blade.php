@@ -175,18 +175,6 @@
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
                             </button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fas fa-wrench"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <a href="#" class="dropdown-item">Action</a>
-                                    <a href="#" class="dropdown-item">Another action</a>
-                                    <a href="#" class="dropdown-item">Something else here</a>
-                                    <a class="dropdown-divider"></a>
-                                    <a href="#" class="dropdown-item">Separated link</a>
-                                </div>
-                            </div>
                             <button type="button" class="btn btn-tool" data-card-widget="remove">
                                 <i class="fas fa-times"></i>
                             </button>
@@ -251,10 +239,10 @@
                                 <tbody>
                                     @foreach ($ordenes_compra as $item)
                                         <tr>
-                                            <td><a href="#">{{$item->id}}</a></td>
-                                            <td>{{$item->proyecto}}</td>
+                                            <td><a href="#">{{ $item->id }}</a></td>
+                                            <td>{{ $item->proyecto }}</td>
                                             <td>
-                                                @if ($item->status == "por pagar")
+                                                @if ($item->status == 'por pagar')
                                                     <span class="badge badge-warning">Por pagar</span>
                                                 @else
                                                     <span class="badge badge-success">Pagada</span>
@@ -262,7 +250,7 @@
                                             </td>
                                             <td>
                                                 <div class="sparkbar" data-color="#00a65a" data-height="20">
-                                                    {{$item->total}}
+                                                    {{ $item->total }}
                                                 </div>
                                             </td>
                                         </tr>
@@ -274,9 +262,20 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                        <a href="{{route('ordenes_compra')}}" class="btn btn-sm btn-secondary float-right">Ver todas las ordenes</a>
+                        <a href="{{ route('ordenes_compra') }}" class="btn btn-sm btn-secondary float-right">Ver todas las
+                            ordenes</a>
                     </div>
                     <!-- /.card-footer -->
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="card ">
+                    <div class="card-header border-transparent">
+                        
+                        <img class="card-img-top" src="{{asset("images/undraw_business_deal_cpi9.svg")}}" alt="img">
+                       
+                    </div>
                 </div>
             </div>
 

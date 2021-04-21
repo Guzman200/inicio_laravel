@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistema</title>
+    <title>Sistema orden de compra</title>
+
+    <link rel="shortcut icon" href="{{asset('images/logo.png')}}" type="image/png">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -74,10 +76,10 @@
                                 style="width: 70px; height: 70px" 
                                 data-img_perfil=""
                                 class="rounded-circle"  
-                                @if (true) 
+                                @if (false) 
                                 src="https://ui-avatars.com/api/?name={{ auth()->user()->nombres }}&background=0275d8&color=fff" 
                                 @else
-                                src="{{ asset('uploads/' . auth()->user()->img_perfil) }}" @endif
+                                src="{{ asset('images/user.png')}}" @endif
                                 alt="img-perfil">
                             <small class="form-text text-muted">{{ auth()->user()->name }}</small>
                         </div>
@@ -98,19 +100,20 @@
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
+            <!-- Brand Logo 
             <a href="{{route('home')}}" class="brand-link">
-                <img src="{{asset("dist/img/AdminLTELogo.png")}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                <img src="{{asset("images/logo.png")}}" alt="Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Sistema</span>
             </a>
+            -->
 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{asset("dist/img/user2-160x160.jpg")}}" class="img-circle elevation-2" alt="User Image">
+                        <img src="{{asset("images/user.png")}}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">Pedro Guzmán</a>
@@ -212,8 +215,8 @@
         <!-- /.content-wrapper -->
 
         <footer class="main-footer">
-            <strong>Copyright &copy; 2021-{{ date('Y') }} <a href="#">System Inventory</a>.</strong>
-            Todos los derechos reservados.
+            <strong>Copyright &copy; 2021-{{ date('Y') }} <a href="#">Sistema orden de compra</a>.</strong>
+            Todos los derechos reservados. | By <a href="http://pedroguzman.com.mx/">Pedro Guzmán</a>
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.0.0
             </div>
