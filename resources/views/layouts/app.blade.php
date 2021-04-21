@@ -81,12 +81,14 @@
                                 @else
                                 src="{{ asset('images/user.png')}}" @endif
                                 alt="img-perfil">
-                            <small class="form-text text-muted">{{ auth()->user()->name }}</small>
+                            <small class="form-text text-muted">{{ auth()->user()->nombres }}</small>
                         </div>
+                        <!--
                         <a class="dropdown-item" href="#" data-toggle="modal"
                             data-target="#modalCambiarContraseña">Cambiar contraseña</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalPerfilUsuario">Mi
                             perfil de usuario</a>
+                        -->
                         <div role="separator" class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-logout>Cerrar sesión</a>
                     </div>
