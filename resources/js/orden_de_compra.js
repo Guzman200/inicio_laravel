@@ -34,8 +34,7 @@ $(document).ready(() => {
             {
                 "targets": 8,
                 "render": function ( data, type, row ) {
-                    console.log(row.pagos_pagados);
-
+                   
                     let editar = `<a class="dropdown-item" href="#" data-edit_orden_de_compra='${row.id}'>Editar</a>`;
 
                     if(row.pagos_pagados > 0){
@@ -43,16 +42,18 @@ $(document).ready(() => {
                     }
 
                     return ` 
-                    <button class="btn btn-sm" type="button" 
-                            data-toggle="dropdown"  aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        ${editar}
-                        <a class="dropdown-item" href="#" data-delete_orden_compra='${row.id}'>Eliminar</a>
-                        <a class="dropdown-item" href="#" data-ver_detalle='${row.id}'>Ver detalle</a>
-                        <a class="dropdown-item" href="/ordenes_compra/subir-facturas/${row.id}">Adjuntar facturas</a>
-                    </div>`;
+                        <button class="btn btn-sm" type="button" 
+                                data-toggle="dropdown"  aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            ${editar}
+                            <a class="dropdown-item" href="#" data-delete_orden_compra='${row.id}'>Eliminar</a>
+                            <a class="dropdown-item" href="#" data-ver_detalle='${row.id}'>Ver detalle</a>
+                            <a class="dropdown-item" href="/ordenes_compra/subir-facturas/${row.id}">Adjuntar facturas</a>
+                            <a class="dropdown-item" href="/reportes/orden-compra/${row.id}">Descargar</a>
+                        </div>
+                    `;
                 }
             }
         ]

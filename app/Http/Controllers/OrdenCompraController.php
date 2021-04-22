@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Factura;
 use App\Models\OrdenCompra;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use SebastianBergmann\Timer\Timer;
 
 class OrdenCompraController extends Controller
 {
@@ -73,6 +72,18 @@ class OrdenCompraController extends Controller
             ]);
 
         }
+    }
+
+
+    public function descargarOrdenCompra(Request $request, OrdenCompra $orden)
+    {
+        //$pdf = App::make('dompdf.wrapper');
+
+        $pdf = PDF::loadView('reports.orden_compra',compact('orden'));
+
+
+       // $pdf->loadView('reports.orden_compra',compact('orden'));
+        return $pdf->download('orden_compra_#' . $orden->id . '.pdf');
     }
 
     /**

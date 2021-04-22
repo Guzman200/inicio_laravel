@@ -39,25 +39,5 @@ class HomeController extends Controller
         return view('home', compact('pagos_pendientes','proveedores','ordenes','usuarios','ordenes_compra'));
     }
 
-    public function formato()
-    {
-
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('formato');
-        //$pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
-
-        return view('formato');
-    }
-
-    public function formato2()
-    {
-
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('formato2');
-        //$pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
-
-        return view('formato2');
-    }
+    
 }

@@ -19,13 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
-Route::get('/formato', [HomeController::class, 'formato']);
-Route::get('/formato2', [HomeController::class, 'formato2']);
 
 Auth::routes();
 
 /** ============> ENDPOINTS CON AUTENTICACION <============================= */
 Route::group(['middleware' => 'auth:sanctum'], function () {
+
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -37,9 +36,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/ordenes_compra', [OrdenCompraController::class, 'index'])->name('ordenes_compra');
 
+    Route::get('/pagos', [PagoController::class, 'index'])->name('pagos');
+
 
     // orden de compra
     Route::prefix('ordenes_compra')->group(function () {
+
 
         Route::get('subir-facturas/{orden}', [OrdenCompraController::class, 'subirFacturas'])
             ->name('subirFacturas');
@@ -57,6 +59,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     });
 
+    // Rutas de reportes
+    Route::prefix('reportes')->group(function(){
 
-    Route::get('/pagos', [PagoController::class, 'index'])->name('pagos');
+        Route::get('/orden-compra/{orden}', [OrdenCompraController::class, 'descargarOrdenCompra']);
+    });
+
+   
 });

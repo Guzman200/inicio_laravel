@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Factura</title>
+    <title>Orden de compra</title>
     <link rel="stylesheet" href="{{ asset('css/estilos_factura.css') }}">
 </head>
 
 <body>
     <!--
-<img class="anulada" src="img/anulado.png" alt="Anulada">
--->
+    <img class="anulada" src="img/anulado.png" alt="Anulada">
+    -->
     <div id="page_pdf">
         <table id="factura_head">
             <tr>
@@ -33,10 +33,10 @@
                 <td class="info_factura">
                     <div class="round">
                         <span class="h3">Orden de compra</span>
-                        <p>No. orden: <strong>000001</strong></p>
-                        <p>Fecha: 20/01/2019</p>
-                        <p>Centro de costo: 789.564.456</p>
-                        <p>Proyecto: Jorge Pérez Hernández Cabrera</p>
+                        <p>No. orden: <strong>{{$orden->id}}</strong></p>
+                        <p>Fecha: {{$orden->created_at->format('d-m-Y')}}</p>
+                        <p>Centro de costo: {{$orden->centro_costo}}</p>
+                        <p>Proyecto: {{$orden->proyecto}}</p>
                     </div>
                 </td>
             </tr>
@@ -51,33 +51,32 @@
                         <table class="datos_cliente">
                             <tr>
                                 <td><label>Proveedor:</label>
-                                    <p>54895468</p>
+                                    <p>{{$orden->proveedor->proveedor}}</p>
                                 </td>
                                 <td><label>Rut:</label>
-                                    <p>7854526</p>
+                                    <p>{{$orden->proveedor->rut}}</p>
                                 </td>
 
                             </tr>
                             <tr>
                                 <td><label>Giro:</label>
-                                    <p>Angel Arana Cabrera</p>
+                                    <p>{{$orden->proveedor->giro}}</p>
                                 </td>
-                                <td><label>Dirección:</label>
-                                    <p>Calzada Buena Vista</p>
-                                </td>
-
-                            </tr>
-                            <tr>
                                 <td><label>Teléfono:</label>
-                                    <p>9622162356</p>
-                                </td>
-                                <td><label>Contacto:</label>
-                                    <p>Ricardo Arevalo</p>
+                                    <p>{{$orden->proveedor->telefono}}</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label>Cotización:</label>
-                                    <p>90-256</p>
+                                    <p>{{$orden->cotizacion}}</p>
+                                </td>
+                                <td><label>Contacto:</label>
+                                    <p>{{$orden->proveedor->contacto}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label>Dirección:</label>
+                                    <p>{{$orden->proveedor->direccion}}</p>
                                 </td>
                             </tr>
                         </table>
@@ -98,17 +97,17 @@
                         <table class="datos_cliente">
                             <tr>
                                 <td><label>Creadar por:</label>
-                                    <p>Angel Arana Cabrera</p>
+                                    <p>{{$orden->user->nombres . " " . $orden->user->ap_paterno . " " . $orden->user->ap_materno}}</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label>No. Pagos:</label>
-                                    <p>12</p>
+                                    <p>{{$orden->num_pagos}}</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label>Observaciones:</label>
-                                    <p>Sin observaciones</p>
+                                    <p>{{$orden->observaciones}}</p>
                                 </td>
                             </tr>
                         </table>
@@ -150,82 +149,43 @@
                 </tr>
             </thead>
             <tbody id="detalle_productos">
-                <tr>
-                    <td class="textcenter">1</td>
-                    <td class="textcenter">10</td>
-                    <td class="textcenter">250</td>
-                    <td>Plancha</td>
-                    <td class="textright">516.67</td>
-                    <td class="textright">516.67</td>
-                </tr>
-                <tr>
-                    <td class="textcenter">1</td>
-                    <td class="textcenter">10</td>
-                    <td class="textcenter">250</td>
-                    <td>Plancha</td>
-                    <td class="textright">516.67</td>
-                    <td class="textright">516.67</td>
-                </tr>
-                <tr>
-                    <td class="textcenter">1</td>
-                    <td class="textcenter">10</td>
-                    <td class="textcenter">250</td>
-                    <td>Plancha</td>
-                    <td class="textright">516.67</td>
-                    <td class="textright">516.67</td>
-                </tr>
-                <tr>
-                    <td class="textcenter">1</td>
-                    <td class="textcenter">10</td>
-                    <td class="textcenter">250</td>
-                    <td>Plancha</td>
-                    <td class="textright">516.67</td>
-                    <td class="textright">516.67</td>
-                </tr>
-                <tr>
-                    <td class="textcenter">1</td>
-                    <td class="textcenter">10</td>
-                    <td class="textcenter">250</td>
-                    <td>Plancha</td>
-                    <td class="textright">516.67</td>
-                    <td class="textright">516.67</td>
-                </tr>
-
+                @foreach($orden->detalleOrdenCompra as $detalle)
+                    <tr>
+                        <td class="textcenter">{{$loop->iteration}}</td>
+                        <td class="textcenter">{{$detalle->unidad}}</td>
+                        <td class="textcenter">{{$detalle->cantidad}}</td>
+                        <td>{{$detalle->descripcion}}</td>
+                        <td class="textright">{{$detalle->valor_unitario}}</td>
+                        <td class="textright">{{$detalle->cantidad * $detalle->valor_unitario}}</td>
+                    </tr>
+                @endforeach
             </tbody>
             <tfoot id="detalle_totales">
                 <tr>
                     <td colspan="5" class="textright"><span>SUBTOTAL $</span></td>
-                    <td class="textright"><span>516.67</span></td>
+                    <td class="textright"><span>{{$orden->subtotal}}</span></td>
                 </tr>
                 <tr>
                     <td colspan="5" class="textright"><span>DESCUENTO $</span></td>
-                    <td class="textright"><span>516.67</span></td>
+                    <td class="textright"><span>{{($orden->descuento * $orden->subtotal ) /100}}</span></td>
                 </tr>
                 <tr>
                     <td colspan="5" class="textright"><span>NETO $</span></td>
-                    <td class="textright"><span>516.67</span></td>
+                    <td class="textright"><span>{{$orden->total_neto}}</span></td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="textright"><span>IVA (12%) $</span></td>
-                    <td class="textright"><span>516.67</span></td>
+                    <td colspan="5" class="textright"><span>IVA ({{$orden->iva->porcentaje}}%) $</span></td>
+                    <td class="textright"><span>{{($orden->iva->porcentaje * $orden->total_neto) /100}}</span></td>
                 </tr>
                 <tr>
                     <td colspan="5" class="textright"><span>TOTAL $</span></td>
-                    <td class="textright"><span>516.67</span></td>
+                    <td class="textright"><span>{{$orden->total}}</span></td>
                 </tr>
             </tfoot>
         </table>
 
 
-
-
-        <!--
-        <div>
-            <p class="nota">-------------------</p>
-        </div>
-    -->
-
-
+        <!-- Importante y firma -->
         <div>
             <p class="nota" style="display : inline; color : red;">IMPORTANTE</p>
             <p class="nota">ENVIAR FACTURA EN FORMATO PDF A MANUEL.ACUNA@IDCHILESERVICIOS.CL, ADJUNTANDO ORDEN DE COMPRA
