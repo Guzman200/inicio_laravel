@@ -65,7 +65,22 @@
   .has-float-label .form-control:placeholder-shown:not(:focus):-ms-input-placeholder {
     opacity: 0;
   }
+  .has-float-label .form-control:-moz-placeholder-shown:not(:focus)::-moz-placeholder {
+    opacity: 0;
+  }
   .has-float-label .form-control:placeholder-shown:not(:focus)::-moz-placeholder {
+    opacity: 0;
+  }
+  .has-float-label .form-control:placeholder-shown:not(:focus):-ms-input-placeholder {
+    opacity: 0;
+  }
+  .has-float-label .form-control:-ms-input-placeholder:not(:focus)::placeholder {
+    opacity: 0;
+  }
+  .has-float-label .form-control:placeholder-shown:not(:focus)::-moz-placeholder {
+    opacity: 0;
+  }
+  .has-float-label .form-control:placeholder-shown:not(:focus):-ms-input-placeholder {
     opacity: 0;
   }
   .has-float-label .form-control:-moz-placeholder-shown:not(:focus)::placeholder {

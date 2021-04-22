@@ -20,6 +20,7 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 Route::get('/formato', [HomeController::class, 'formato']);
+Route::get('/formato2', [HomeController::class, 'formato2']);
 
 Auth::routes();
 

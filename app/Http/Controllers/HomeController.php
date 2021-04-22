@@ -49,4 +49,15 @@ class HomeController extends Controller
 
         return view('formato');
     }
+
+    public function formato2()
+    {
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('formato2');
+        //$pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+
+        return view('formato2');
+    }
 }

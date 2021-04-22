@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/css/estilos_factura.css": "/css/estilos_factura.css",
     "/js/formas_pago.js": "/js/formas_pago.js",
     "/js/home.js": "/js/home.js",
     "/js/login.js": "/js/login.js",
