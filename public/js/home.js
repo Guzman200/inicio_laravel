@@ -156,7 +156,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/home.js */"./resources/js/home.js");
+module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/home.js */"./resources/js/home.js");
 
 
 /***/ })

@@ -15019,7 +15019,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/proveedores.js */"./resources/js/proveedores.js");
+module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/proveedores.js */"./resources/js/proveedores.js");
 
 
 /***/ })

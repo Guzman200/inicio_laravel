@@ -15009,7 +15009,7 @@ var datatablesJSON = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/formas_pago.js */"./resources/js/formas_pago.js");
+module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/formas_pago.js */"./resources/js/formas_pago.js");
 
 
 /***/ })

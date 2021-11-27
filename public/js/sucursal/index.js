@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -14913,10 +14913,10 @@ var datatablesJSON = {
 
 /***/ }),
 
-/***/ "./resources/js/login/login.js":
-/*!*************************************!*\
-  !*** ./resources/js/login/login.js ***!
-  \*************************************/
+/***/ "./resources/js/sucursal/index.js":
+/*!****************************************!*\
+  !*** ./resources/js/sucursal/index.js ***!
+  \****************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14924,65 +14924,103 @@ var datatablesJSON = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../helpers.js */ "./resources/js/helpers.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../helpers */ "./resources/js/helpers.js");
 
 
 $(document).ready(function () {
-  /**==================================== LOGIN========================================= */
-  var formLogin = $("#form-login"); // envio de login
+  var formBuscar = $("#form-busqueda");
+  var tablaSucursales; // Inicializamos la tabla sucursales
 
-  formLogin.on("submit", function (event) {
-    event.preventDefault(); // validacion de formulario
-
-    if (!formLogin.valid()) {
-      return false;
-    }
-
-    var form = new FormData(event.target);
-    Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["loaderIn"])(); // peticion para csrf-cookie - solo al iniciar sesión
-
-    axios.get("/sanctum/csrf-cookie").then(function () {
-      // inicio de sesion
-      axios.post("/api/login", form).then(function (res) {
-        console.log(res);
-        window.location.reload();
-      })["catch"](function (_ref) {
-        var response = _ref.response;
-        console.log(response);
-        Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["responseAxios"])(response);
-        Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["loaderOut"])();
-      });
-    })["catch"](function () {
-      Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["loaderOut"])();
-    });
-  }); // validaciones del formulario login
-
-  formLogin.validate({
-    rules: {
-      nombre_usuario: {
-        required: true,
-        minlength: 5,
-        maxlength: 255
-      },
-      password: {
-        required: true,
-        minlength: 5
-      }
+  tablaSucursales = $("#tabla_sucursales").DataTable({
+    "responsive": true,
+    "autoWidth": false,
+    "serverSide": true,
+    "language": _helpers__WEBPACK_IMPORTED_MODULE_1__["datatablesJSON"],
+    // Se traduce la datatables a español
+    "lengthChange": false,
+    // Ocultamos el paginado
+    "ajax": {
+      "url": "../sucursales",
+      "type": "GET"
     },
-    messages: {}
+    "columns": [{
+      "data": "id"
+    }, {
+      "data": "codigo"
+    }, {
+      "data": "nombre"
+    }, {
+      "data": "direccion"
+    }, {
+      "data": "telefono"
+    }, {
+      "data": "email"
+    }, {
+      "defaultContent": ""
+    }],
+    "columnDefs": [{
+      "targets": 6,
+      "render": function render(data, type, row) {
+        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_sucursal='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_sucursal='").concat(row.id, "' data-sucursal='").concat(row.nombre, "'>Eliminar</a>\n                    </div>");
+      }
+    }]
+  }); // Agregar un nuevo proveedor
+
+  $("button[data-add_sucursal]").off().click(function () {
+    Livewire.emit('agregar');
+  }); // Editar un proveedor
+
+  $(document).on('click', 'a[data-edit_sucursal]', function () {
+    var id = $(this).data("edit_sucursal");
+    Livewire.emit('editar', id);
+  }); // Eliminar sucursal
+
+  $(document).on('click', 'a[data-delete_sucursal]', function () {
+    var id = $(this).data("delete_sucursal");
+    var sucursal = $(this).data("sucursal");
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["sweetDelete"])("¿Eliminar sucursal?", "\xA1Se eliminara la sucursal <b>".concat(sucursal, "</b>!"), function () {
+      Livewire.emit('eliminar', id);
+    });
+  });
+  /** Actualiza la tabla de transportadores al actulaizar o registrar un proveedor */
+
+  Livewire.on('actualizar_tabla', function () {
+    tablaSucursales.ajax.reload(null, false);
+  });
+  Livewire.on('abrirModal', function () {
+    $("#modalSucursales").modal({
+      backdrop: "static"
+    });
+  });
+  Livewire.on('sweetAlert', function (title, message, icon) {
+    sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire(title, message, icon);
+  });
+  Livewire.on('siguienteInputFocus', function (inputId) {
+    $(inputId).focus();
+  });
+  /** ================================> Datatables <=========================================  */
+  // Agregamos nuestro input personalizado para buscar en la datatable
+
+  $("#busqueda").on("keyup search input paste cut", function () {
+    tablaSucursales.search(this.value).draw();
+  }); // En realidad esto no hace casi nada (Podria o no estar)
+
+  formBuscar.submit(function (event) {
+    event.preventDefault();
+    $("#busqueda").keyup();
   });
 });
 
 /***/ }),
 
-/***/ 8:
-/*!*******************************************!*\
-  !*** multi ./resources/js/login/login.js ***!
-  \*******************************************/
+/***/ 7:
+/*!**********************************************!*\
+  !*** multi ./resources/js/sucursal/index.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/login/login.js */"./resources/js/login/login.js");
+module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/sucursal/index.js */"./resources/js/sucursal/index.js");
 
 
 /***/ })

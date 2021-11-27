@@ -15026,7 +15026,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/orden_de_compra.js */"./resources/js/orden_de_compra.js");
+module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/orden_de_compra.js */"./resources/js/orden_de_compra.js");
 
 
 /***/ })

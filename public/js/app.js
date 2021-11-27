@@ -47884,9 +47884,9 @@ $("#loader").click();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /var/www/sistema_orden_de_compra/resources/sass/estilos_factura.scss */"./resources/sass/estilos_factura.scss");
+__webpack_require__(/*! /var/www/ordencompra/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /var/www/ordencompra/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/sass/estilos_factura.scss */"./resources/sass/estilos_factura.scss");
 
 
 /***/ })

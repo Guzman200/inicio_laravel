@@ -196,6 +196,16 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('sucursales')}}" class="nav-link {{request()->is('sucursales') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-building"></i>
+                                <p>
+                                    Sucursales
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
                         
                         
                     </ul>

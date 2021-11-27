@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdenCompraController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\TipoPagoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/ordenes_compra', [OrdenCompraController::class, 'index'])->name('ordenes_compra');
 
     Route::get('/pagos', [PagoController::class, 'index'])->name('pagos');
+
+    Route::get('/sucursales', [SucursalController::class, 'index'])->name('sucursales');
 
 
     // orden de compra

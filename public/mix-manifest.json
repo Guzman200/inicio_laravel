@@ -9,5 +9,6 @@
     "/js/pagos.js": "/js/pagos.js",
     "/js/proveedores.js": "/js/proveedores.js",
     "/js/register.js": "/js/register.js",
+    "/js/sucursal/index.js": "/js/sucursal/index.js",
     "/js/usuarios.js": "/js/usuarios.js"
 }
