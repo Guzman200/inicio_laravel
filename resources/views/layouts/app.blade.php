@@ -202,7 +202,6 @@
                                 <i class="nav-icon fas fa-building"></i>
                                 <p>
                                     Sucursales
-                                    <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
                         </li>

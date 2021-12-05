@@ -34,7 +34,7 @@
                                         class="form-control hide-placeholder @error('codigo') is-invalid @enderror"
                                         placeholder="Codigo"
                                         wire:keydown.enter.prevent="siguienteInputFocus('#nombre')">
-                                    <span>Código</span>
+                                    <span>Código<sup>*</sup></span>
                                 </label>
                                 @error('codigo')
                                     <div class="invalid-feedback text-right d-block">{{ $message }}</div>
@@ -49,7 +49,7 @@
                                     class="form-control hide-placeholder @error('nombre') is-invalid @enderror"
                                     placeholder="Nombre"
                                     wire:keydown.enter.prevent="siguienteInputFocus('#email')">
-                                <span>Nombre</span>
+                                <span>Nombre<sup>*</sup></span>
                             </label>
                             @error('nombre')
                                 <div class="invalid-feedback text-right d-block">{{ $message }}</div>
@@ -63,7 +63,7 @@
                                     class="form-control hide-placeholder @error('email') is-invalid @enderror"
                                     placeholder="Email"
                                     wire:keydown.enter.prevent="siguienteInputFocus('#direccion')">
-                                <span>Correo electrónico</span>
+                                <span>Correo electrónico<sup>*</sup></span>
                             </label>
                             @error('email')
                                 <div class="invalid-feedback text-right d-block">{{ $message }}</div>
@@ -78,7 +78,7 @@
                                         class="form-control hide-placeholder @error('direccion') is-invalid @enderror"
                                         placeholder="Dirección"
                                         wire:keydown.enter.prevent="siguienteInputFocus('#telefono')">
-                                    <span>Dirección</span>
+                                    <span>Dirección<sup>*</sup></span>
                                 </label>
                                 @error('direccion')
                                     <div class="invalid-feedback text-right d-block">{{ $message }}</div>
