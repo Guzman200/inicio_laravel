@@ -29,6 +29,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/sucursal/index.js') }}"></script>
+    <script src="{{ mix('js/sucursal/index.js') }}"></script>
     @livewireScripts
 @endsection
