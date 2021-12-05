@@ -198,6 +198,15 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{route('productos')}}" class="nav-link {{request()->is('productos') ? 'active' : ''}}">
+                                <i class="nav-icon fab fa-product-hunt"></i>
+                                <p>
+                                    Productos
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{route('sucursales')}}" class="nav-link {{request()->is('sucursales') ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-building"></i>
                                 <p>

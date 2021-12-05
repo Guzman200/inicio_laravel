@@ -7,6 +7,7 @@ use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdenCompraController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\TipoPagoController;
@@ -40,6 +41,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/pagos', [PagoController::class, 'index'])->name('pagos');
 
     Route::get('/sucursales', [SucursalController::class, 'index'])->name('sucursales');
+
+    Route::get('/productos', [ProductoController::class, 'index'])->name('productos');
 
 
     // orden de compra
