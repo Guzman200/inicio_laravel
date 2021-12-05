@@ -18,8 +18,11 @@
     <th scope="col">Nombre</th>
     <th scope="col">Categoría</th>
     <th scope="col">Precio de venta</th>
+    <th scope="col">Precio de venta</th> <!-- render -->
     <th scope="col">Stock en dinero</th>
+    <th scope="col">Stock en dinero</th> <!-- render -->
     <th scope="col">Stock</th>
+    <th scope="col">Stock</th>  <!-- render -->
     <th scope="col">Quiebre de stock</th>
     <th scope="col">Acciones</th>
 @endsection
