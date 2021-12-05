@@ -14979,7 +14979,7 @@ $(document).ready(function () {
     }]
   }); // Agregar un nuevo proveedor
 
-  $("button[data-add_sucursal]").off().click(function () {
+  $("button[data-add_producto]").off().click(function () {
     Livewire.emit('agregar');
   }); // Editar un proveedor
 
@@ -14998,10 +14998,10 @@ $(document).ready(function () {
   /** Actualiza la tabla de transportadores al actulaizar o registrar un proveedor */
 
   Livewire.on('actualizar_tabla', function () {
-    tablaSucursales.ajax.reload(null, false);
+    tablaProductos.ajax.reload(null, false);
   });
   Livewire.on('abrirModal', function () {
-    $("#modalSucursales").modal({
+    $("#modalProductos").modal({
       backdrop: "static"
     });
   });

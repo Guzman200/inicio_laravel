@@ -53,7 +53,7 @@ $(document).ready(() => {
 
     
     // Agregar un nuevo proveedor
-    $("button[data-add_sucursal]")
+    $("button[data-add_producto]")
         .off()
         .click(function () {
             Livewire.emit('agregar');
@@ -83,12 +83,12 @@ $(document).ready(() => {
 
     /** Actualiza la tabla de transportadores al actulaizar o registrar un proveedor */
     Livewire.on('actualizar_tabla', () =>{
-        tablaSucursales.ajax.reload(null,false);
+        tablaProductos.ajax.reload(null,false);
     });
 
 
     Livewire.on('abrirModal', () => {
-        $("#modalSucursales").modal({backdrop: "static"});
+        $("#modalProductos").modal({backdrop: "static"});
     })
 
     Livewire.on('sweetAlert', (title, message, icon) => {

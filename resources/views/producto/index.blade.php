@@ -29,7 +29,7 @@
 
 @section('componentes_livewire')
 
-    {{--@livewire('sucursal.crear-editar')--}}
+    @livewire('producto.crear-editar')
 
 @endsection
 
