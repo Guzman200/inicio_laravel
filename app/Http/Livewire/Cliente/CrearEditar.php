@@ -89,7 +89,7 @@ class CrearEditar extends Component
         $this->direccion        = "";
         $this->telefono         = "";
         $this->email            = "";
-        $this->fecha_nacimiento = "";
+        $this->fecha_nacimiento = null;
     }
 
     public function editar($id)

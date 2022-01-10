@@ -232,6 +232,15 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('crearVenta')}}" class="nav-link {{request()->is('ventas/nueva') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-cash-register"></i>
+                                <p>
+                                    Ventas
+                                </p>
+                            </a>
+                        </li>
                         
                         
                     </ul>

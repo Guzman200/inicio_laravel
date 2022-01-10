@@ -7,6 +7,7 @@ use App\Models\Producto;
 use App\Models\Proveedor;
 use App\Models\Sucursal;
 use App\Models\TipoPago;
+use App\Models\TipoVenta;
 use App\Models\User;
 use Database\Factories\SucursalFactory;
 use Illuminate\Database\Seeder;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         Categoria::factory(15)->create();
         Producto::factory(20)->create();
 
+
         User::create([
             'nombres'        => 'Pedro', 
             'email'          => 'my.rg.developer@gmail.com', 
@@ -40,6 +42,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(IvaSeeder::class);
+        $this->call(ClienteSeeder::class);
+        $this->call(TipoVentaSeeder::class);
         
     }
 }
