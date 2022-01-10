@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -14630,6 +14630,102 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 
 /***/ }),
 
+/***/ "./resources/js/categoria/index.js":
+/*!*****************************************!*\
+  !*** ./resources/js/categoria/index.js ***!
+  \*****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../helpers */ "./resources/js/helpers.js");
+
+
+$(document).ready(function () {
+  var formBuscar = $("#form-busqueda");
+  var tablaCategorias; // Inicializamos la tabla categorias
+
+  tablaCategorias = $("#tabla_categorias").DataTable({
+    "responsive": true,
+    "autoWidth": false,
+    "serverSide": true,
+    "language": _helpers__WEBPACK_IMPORTED_MODULE_1__["datatablesJSON"],
+    // Se traduce la datatables a español
+    "lengthChange": false,
+    // Ocultamos el paginado
+    "ajax": {
+      "url": "../categorias",
+      "type": "GET"
+    },
+    "columns": [{
+      "data": "id"
+    }, {
+      "data": "codigo"
+    }, {
+      "data": "nombre"
+    }, {
+      "data": "productos"
+    }, {
+      "defaultContent": ""
+    }],
+    "columnDefs": [{
+      "targets": 4,
+      "render": function render(data, type, row) {
+        return " \n                    <button class=\"btn btn-sm\" type=\"button\" \n                            data-toggle=\"dropdown\"  aria-expanded=\"false\">\n                            <i class=\"fas fa-ellipsis-v\"></i>\n                    </button>\n                    <div class=\"dropdown-menu dropdown-menu-right\">\n                        <a class=\"dropdown-item\" href=\"#\" data-edit_categoria='".concat(row.id, "'>Editar</a>\n                        <a class=\"dropdown-item\" href=\"#\" data-delete_categoria='").concat(row.id, "' data-categoria='").concat(row.nombre, "'>Eliminar</a>\n                    </div>");
+      }
+    }]
+  }); // Agregar una nueva categorias
+
+  $("button[data-add_categoria]").off().click(function () {
+    Livewire.emit('agregar');
+  }); // Editar una categoria
+
+  $(document).on('click', 'a[data-edit_categoria]', function () {
+    var id = $(this).data("edit_categoria");
+    Livewire.emit('editar', id);
+  }); // Eliminar sucursal
+
+  $(document).on('click', 'a[data-delete_categoria]', function () {
+    var id = $(this).data("delete_categoria");
+    var categoria = $(this).data("categoria");
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["sweetDelete"])("¿Eliminar categoría?", "\xA1Se eliminara la categor\xEDa <b>".concat(categoria, "</b>!"), function () {
+      Livewire.emit('eliminar', id);
+    });
+  });
+  /** Actualiza la tabla de transportadores al actulaizar o registrar un proveedor */
+
+  Livewire.on('actualizar_tabla', function () {
+    tablaCategorias.ajax.reload(null, false);
+  });
+  Livewire.on('abrirModal', function () {
+    $("#modalCategorias").modal({
+      backdrop: "static"
+    });
+  });
+  Livewire.on('sweetAlert', function (title, message, icon) {
+    sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire(title, message, icon);
+  });
+  Livewire.on('siguienteInputFocus', function (inputId) {
+    $(inputId).focus();
+  });
+  /** ================================> Datatables <=========================================  */
+  // Agregamos nuestro input personalizado para buscar en la datatable
+
+  $("#busqueda").on("keyup search input paste cut", function () {
+    tablaCategorias.search(this.value).draw();
+  }); // En realidad esto no hace casi nada (Podria o no estar)
+
+  formBuscar.submit(function (event) {
+    event.preventDefault();
+    $("#busqueda").keyup();
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/helpers.js":
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
@@ -14914,97 +15010,14 @@ var datatablesJSON = {
 
 /***/ }),
 
-/***/ "./resources/js/login/register.js":
-/*!****************************************!*\
-  !*** ./resources/js/login/register.js ***!
-  \****************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../helpers.js */ "./resources/js/helpers.js");
-
-
-$(document).ready(function () {
-  var formRegistro = $("#form-registro"); // abre el modal de registro y reinicia todos los valores y validaciones
-
-  $("[data-openRegister]").click(function (event) {}); // envio de registro
-
-  formRegistro.on("submit", function (event) {
-    event.preventDefault(); // validacion de formulario
-
-    if (!formRegistro.valid()) {
-      return false;
-    } //var recaptcha = grecaptcha.getResponse();
-    //if (recaptcha.length == 0) {
-    // sweetInfo("Recaptacha obligatorio", "", "warning", 3000);
-    //return false;
-    //}
-
-
-    var form = new FormData(event.target);
-    Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["loaderIn"])();
-    axios.post("/api/register", form).then(function (response) {
-      console.log(response);
-      window.location.reload(); //modalRegistro.modal("hide");
-      //responseAxios(response);
-    })["catch"](function (_ref) {
-      var response = _ref.response;
-      console.log(response); //grecaptcha.reset();
-
-      Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["responseAxios"])(response);
-    }).then(function () {
-      Object(_helpers_js__WEBPACK_IMPORTED_MODULE_1__["loaderOut"])();
-    });
-  }); // validaciones modal registro
-
-  formRegistro.validate({
-    rules: {
-      name: {
-        required: true,
-        //alphabet: true,
-        minlength: 5,
-        maxlength: 255
-      },
-      nombre_usuario: {
-        required: true,
-        minlength: 5,
-        maxlength: 255
-      },
-      email: {
-        required: true,
-        minlength: 2,
-        maxlength: 255
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      password_confirmation: {
-        equalTo: password
-      }
-    },
-    messages: {
-      password_confirmation: {
-        equalTo: 'Las contraseñas no coinciden'
-      }
-    }
-  });
-});
-
-/***/ }),
-
-/***/ 11:
-/*!**********************************************!*\
-  !*** multi ./resources/js/login/register.js ***!
-  \**********************************************/
+/***/ 9:
+/*!***********************************************!*\
+  !*** multi ./resources/js/categoria/index.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/login/register.js */"./resources/js/login/register.js");
+module.exports = __webpack_require__(/*! /var/www/ordencompra/resources/js/categoria/index.js */"./resources/js/categoria/index.js");
 
 
 /***/ })

@@ -199,7 +199,7 @@
 
                         <li class="nav-item">
                             <a href="{{route('productos')}}" class="nav-link {{request()->is('productos') ? 'active' : ''}}">
-                                <i class="nav-icon fab fa-product-hunt"></i>
+                                <i class="nav-icon fas fa-boxes"></i>
                                 <p>
                                     Productos
                                 </p>
@@ -211,6 +211,15 @@
                                 <i class="nav-icon fas fa-building"></i>
                                 <p>
                                     Sucursales
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('categorias')}}" class="nav-link {{request()->is('categorias') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-network-wired"></i>
+                                <p>
+                                    Categorías
                                 </p>
                             </a>
                         </li>

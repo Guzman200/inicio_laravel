@@ -47660,6 +47660,7 @@ var sweetDelete = function sweetDelete(title, html, callback) {
     icon: icon,
     showCancelButton: true,
     confirmButtonText: confirmButtonText,
+    cancelButtonText: 'Cancelar',
     customClass: {
       confirmButton: "btn btn-danger",
       cancelButton: "btn btn-default"

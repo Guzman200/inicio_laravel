@@ -134,6 +134,7 @@ const sweetDelete = (title, html, callback, icon = "warning", confirmButtonText 
     icon,
     showCancelButton: true,
     confirmButtonText,
+    cancelButtonText : 'Cancelar',
     customClass: {
       confirmButton: "btn btn-danger",
       cancelButton: "btn btn-default",

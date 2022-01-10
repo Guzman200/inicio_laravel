@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -14819,6 +14819,7 @@ var sweetDelete = function sweetDelete(title, html, callback) {
     icon: icon,
     showCancelButton: true,
     confirmButtonText: confirmButtonText,
+    cancelButtonText: 'Cancelar',
     customClass: {
       confirmButton: "btn btn-danger",
       cancelButton: "btn btn-default"
@@ -14975,7 +14976,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 9:
+/***/ 10:
 /*!*******************************************!*\
   !*** multi ./resources/js/login/login.js ***!
   \*******************************************/

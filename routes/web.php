@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\Catalogos\CategoriaController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdenCompraController;
@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/sucursales', [SucursalController::class, 'index'])->name('sucursales');
 
     Route::get('/productos', [ProductoController::class, 'index'])->name('productos');
+
+    Route::get('/categorias', [CategoriaController::class, 'index'])->name('categorias');
 
 
     // orden de compra

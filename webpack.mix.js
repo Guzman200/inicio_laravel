@@ -20,6 +20,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/home.js', 'public/js')
     .js('resources/js/sucursal/index.js', 'public/js/sucursal')
     .js('resources/js/producto/index.js', 'public/js/producto')
+    .js('resources/js/categoria/index.js', 'public/js/categoria')
     // js's de login
     .js('resources/js/login/login.js', 'public/js')
     .js('resources/js/login/register.js', 'public/js')

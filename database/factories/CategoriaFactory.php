@@ -22,7 +22,8 @@ class CategoriaFactory extends Factory
     public function definition()
     {
         return [
-            'nombre' => $this->faker->unique()->colorName
+            'nombre' => $this->faker->unique()->colorName,
+            'codigo' => $this->faker->unique()->isbn10
         ];
     }
 }
