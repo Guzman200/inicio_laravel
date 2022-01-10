@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Catalogos\CategoriaController;
+use App\Http\Controllers\Catalogos\ClienteController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdenCompraController;
@@ -45,6 +46,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/productos', [ProductoController::class, 'index'])->name('productos');
 
     Route::get('/categorias', [CategoriaController::class, 'index'])->name('categorias');
+
+    Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes');
 
 
     // orden de compra

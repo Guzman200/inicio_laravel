@@ -223,6 +223,15 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('clientes')}}" class="nav-link {{request()->is('clientes') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-address-book"></i>
+                                <p>
+                                    Clientes
+                                </p>
+                            </a>
+                        </li>
                         
                         
                     </ul>
