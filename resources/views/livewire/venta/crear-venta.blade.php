@@ -1,18 +1,18 @@
 <div>
     <div class="container-fluid">
+
+        {{-- CLIENTE Y TIPO DE VENTA --}}
         <div class="card">
             <div class="card-body mb-4">
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label class="has-float-label">
-                                <select class="form-control custom-select hide-placeholder">
-                                    @foreach ($clientes as $cliente)
-                                        <option {{ $cliente->id == 1 ? 'selected' : ''}} value="{{$cliente->id}}">{{$cliente->nombre}}</option>
-                                    @endforeach
-                                </select>
-                                <span>Cliente</span>
-                            </label>
+                            <select id="selectCliente" class="form-control">
+                                @foreach ($clientes as $cliente)
+                                    <option {{ $cliente->id == 1 ? 'selected' : '' }} value="{{ $cliente->id }}">
+                                        {{ $cliente->nombre }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
@@ -20,7 +20,7 @@
                             <label class="has-float-label">
                                 <select class="form-control custom-select hide-placeholder" disabled>
                                     @foreach ($tipo_ventas as $item)
-                                        <option selected value="{{$item->id}}">{{$item->tipo}}</option>
+                                        <option selected value="{{ $item->id }}">{{ $item->tipo }}</option>
                                     @endforeach
                                 </select>
                                 <span>Tipo de venta</span>
@@ -30,13 +30,33 @@
                 </div>
             </div>
         </div>
+
+        {{-- BUSCADOR Y TABLA DE PRODUCTO AGREGADOS A LA VENTA--}}
         <div class="card">
             <div class="card-body">
+                {{-- BUSCADOR DE PRODUCTOS--}}
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="form-group">
-                            <input type="search" class="form-control" placeholder="Buscar producto">
+                            <input wire:model.debounce.500ms="search" type="search" class="form-control" placeholder="Buscar producto">
                         </div>
+                        @if(count($arrayProductos) > 0)
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Productos encontrados</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($arrayProductos as $item)
+                                        <tr>
+                                            <td wire:click="agregarProducto('{{$item['codigo']}}','{{$item['nombre']}}', {{$item['precio_venta']}}, 1)" style="cursor: pointer;">{{$item['codigo']}} - {{$item['nombre']}}</td>
+                                        </tr>
+                                    @endforeach
+                                </ul>
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -47,7 +67,6 @@
                                     <tr>
                                         <th scope="col">Eliminar</th>
                                         <th scope="col">#</th>
-                                        <th scope="col">Unidad</th>
                                         <th scope="col">Cantidad</th>
                                         <th scope="col">Descripción</th>
                                         <th scope="col">Valor Unitario</th>
@@ -55,70 +74,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <button wire:click="eliminarItem(0)" class="btn btn-sm btn-danger">
-                                                <svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true"
-                                                    focusable="false" data-prefix="fas" data-icon="times" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"
-                                                    data-fa-i2svg="">
-                                                    <path fill="currentColor"
-                                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
-                                                    </path>
-                                                </svg><!-- <i class="fas fa-times"></i> Font Awesome fontawesome.com -->
-                                            </button>
-                                        </td>
-                                        <th scope="row">1</th>
-                                        <td>PIEZA</td>
-                                        <td>1000</td>
-                                        <td>DEMO</td>
-                                        <td>10</td>
-                                        <td>10000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button wire:click="eliminarItem(0)" class="btn btn-sm btn-danger">
-                                                <svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true"
-                                                    focusable="false" data-prefix="fas" data-icon="times" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"
-                                                    data-fa-i2svg="">
-                                                    <path fill="currentColor"
-                                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
-                                                    </path>
-                                                </svg><!-- <i class="fas fa-times"></i> Font Awesome fontawesome.com -->
-                                            </button>
-                                        </td>
-                                        <th scope="row">1</th>
-                                        <td>PIEZA</td>
-                                        <td>1000</td>
-                                        <td>DEMO</td>
-                                        <td>10</td>
-                                        <td>10000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button wire:click="eliminarItem(0)" class="btn btn-sm btn-danger">
-                                                <svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true"
-                                                    focusable="false" data-prefix="fas" data-icon="times" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"
-                                                    data-fa-i2svg="">
-                                                    <path fill="currentColor"
-                                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
-                                                    </path>
-                                                </svg><!-- <i class="fas fa-times"></i> Font Awesome fontawesome.com -->
-                                            </button>
-                                        </td>
-                                        <th scope="row">1</th>
-                                        <td>PIEZA</td>
-                                        <td>1000</td>
-                                        <td>DEMO</td>
-                                        <td>10</td>
-                                        <td>10000</td>
-                                    </tr>
+                                    @foreach ($productosAgregados as $key => $item)
+                                        <tr>
+                                            <td>
+                                                <button wire:click="eliminarProducto({{$key}})" class="btn btn-sm btn-danger" title="Eliminar producto de la lista">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </td>
+                                            <th scope="row">{{$loop->iteration}}</th>
+                                            <td>
+                                                <input type="number" value="{{$item['cantidad']}}" class="form-control">
+                                            </td>
+                                            <td>{{$item['nombre']}}</td>
+                                            <td>${{number_format($item['precio'], 2, '.', ',')}}</td>
+                                            <td>${{number_format($item['total'], 2, '.', ',')}}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td class="text-left" colspan="5">
+                                        <td class="text-left" colspan="4">
                                         </td>
                                         <th class="text-left">
                                             Subtotal
@@ -126,7 +101,7 @@
                                         <td>10000</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-left" colspan="5">
+                                        <td class="text-left" colspan="4">
                                         </td>
                                         <th class="text-left">
                                             Descuento
@@ -136,7 +111,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-left" colspan="5">
+                                        <td class="text-left" colspan="4">
                                         </td>
                                         <th class="text-left">
                                             Neto
@@ -144,7 +119,7 @@
                                         <td>10000</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-left" colspan="5">
+                                        <td class="text-left" colspan="4">
                                         </td>
                                         <th class="text-left">
                                             IVA
@@ -152,12 +127,12 @@
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-left" colspan="5">
+                                        <td class="text-left" colspan="4">
                                         </td>
                                         <th class="text-left bg-secondary">
                                             TOTAL
                                         </th>
-                                        <th class="bg-secondary">10000</th>
+                                        <th class="bg-secondary">${{number_format(array_sum(array_column($productosAgregados, 'total')),2,'.',',')}}</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -168,7 +143,8 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Total de la venta</label>
-                                    <input type="text" class="form-control" placeholder="$0.00" readonly>
+                                    <input type="text" class="form-control" placeholder="$0.00" readonly 
+                                        value="${{number_format(array_sum(array_column($productosAgregados, 'total')),2,'.',',')}}">
                                 </div>
                                 <div class="form-group">
                                     <label>Total recibo</label>
@@ -189,3 +165,47 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        $('#selectCliente').select2({
+            language: "es",
+            tags: false,
+            placeholder: "Selecciona un cliente",
+            width: '100%',
+            theme: 'bootstrap4'
+            //dropdownParent: modalFactura,
+            /*minimumInputLength: 1,
+            ajax: {
+                url: '/api/web/search_customers',
+                dataType: 'json',
+                type: 'GET',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        search: params.term
+                    }
+                },
+                processResults: function(data) {
+
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                id: item.id,
+                                text: item.nombre
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }*/
+        });
+
+        /* Para poner el focus en el search de busqueda del select2 */
+        $(document).on('select2:open', () => {  
+            document.querySelector('.select2-search__field').focus();
+        });
+    })
+
+</script>
