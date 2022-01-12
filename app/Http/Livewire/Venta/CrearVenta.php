@@ -14,6 +14,8 @@ class CrearVenta extends Component
     public $search = "";
     public $productosAgregados = []; // Los productos agregados a la compra
 
+    protected $listeners = ['updateCantidad'];
+
     public function render()
     {
         $tipo_ventas = TipoVenta::get();
@@ -38,6 +40,7 @@ class CrearVenta extends Component
             'cantidad' => $cantidad,
             'total'    => ($cantidad * $precio)
         ];
+        
     }
 
     /**
@@ -46,6 +49,17 @@ class CrearVenta extends Component
     public function eliminarProducto($index)
     {
         unset($this->productosAgregados[$index]);
+    }
+
+    /**
+     * Modificar la cantidad del producto
+     * 
+     * @param $index key del array
+     */
+    public function updateCantidad($index, $cantidad){
+        $this->productosAgregados[$index]['cantidad'] = (int) $cantidad;
+        $this->productosAgregados[$index]['total'] = (int) $cantidad * $this->productosAgregados[$index]['precio'];
+        //dd($this->productosAgregados);
     }
 
 

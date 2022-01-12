@@ -67,8 +67,9 @@
                                     <tr>
                                         <th scope="col">Eliminar</th>
                                         <th scope="col">#</th>
-                                        <th scope="col">Cantidad</th>
                                         <th scope="col">Descripción</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Descuento %</th>
                                         <th scope="col">Valor Unitario</th>
                                         <th scope="col">Valor total</th>
                                     </tr>
@@ -82,10 +83,14 @@
                                                 </button>
                                             </td>
                                             <th scope="row">{{$loop->iteration}}</th>
-                                            <td>
-                                                <input type="number" value="{{$item['cantidad']}}" class="form-control">
-                                            </td>
                                             <td>{{$item['nombre']}}</td>
+                                            <td>
+                                                <!-- data-render es usado para forzar el render de este input (solo para ese fin) -->
+                                                <input data-render="{{rand()}}" data-cantidad="{{$item['cantidad']}}" data-key="{{$key}}" type="number" value="{{$item['cantidad']}}" class="form-control inputCantidad">
+                                            </td>
+                                            <td>
+                                                <input type="number" value="0" class="form-control">
+                                            </td>
                                             <td>${{number_format($item['precio'], 2, '.', ',')}}</td>
                                             <td>${{number_format($item['total'], 2, '.', ',')}}</td>
                                         </tr>
@@ -98,7 +103,7 @@
                                         <th class="text-left">
                                             Subtotal
                                         </th>
-                                        <td>10000</td>
+                                        <td>${{number_format(array_sum(array_column($productosAgregados, 'total')),2,'.',',')}}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-left" colspan="4">
@@ -110,7 +115,7 @@
                                             0
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <!--<tr>
                                         <td class="text-left" colspan="4">
                                         </td>
                                         <th class="text-left">
@@ -126,6 +131,7 @@
                                         </th>
                                         <td>0</td>
                                     </tr>
+                                    -->
                                     <tr>
                                         <td class="text-left" colspan="4">
                                         </td>
@@ -175,37 +181,28 @@
             placeholder: "Selecciona un cliente",
             width: '100%',
             theme: 'bootstrap4'
-            //dropdownParent: modalFactura,
-            /*minimumInputLength: 1,
-            ajax: {
-                url: '/api/web/search_customers',
-                dataType: 'json',
-                type: 'GET',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        search: params.term
-                    }
-                },
-                processResults: function(data) {
-
-                    return {
-                        results: $.map(data, function(item) {
-                            return {
-                                id: item.id,
-                                text: item.nombre
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }*/
         });
 
         /* Para poner el focus en el search de busqueda del select2 */
         $(document).on('select2:open', () => {  
             document.querySelector('.select2-search__field').focus();
         });
+
+        $(document).on('change', '.inputCantidad', function(event){
+
+            let key = $(this).data('key'); // key del producto en el array de producto agregados
+            let cantidad_anterior = event.target.getAttribute("data-cantidad");
+            let cantidad = event.target.value;
+
+            if(cantidad == "" || cantidad == "0" || cantidad == 0){
+                Livewire.emit('updateCantidad', key, cantidad_anterior);
+                console.log('Old cantidad');
+            }else{
+                Livewire.emit('updateCantidad', key, cantidad);
+                console.log('New cantidad');
+            }
+        });
+
     })
 
 </script>
