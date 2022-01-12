@@ -114,7 +114,7 @@
                                         <th class="text-left">
                                             Subtotal
                                         </th>
-                                        <td>${{ number_format(array_sum(array_column($productosAgregados, 'total')), 2, '.', ',') }}
+                                        <td>${{ number_format(array_sum(array_column($productosAgregados, 'total_sin_descuento')), 2, '.', ',') }}
                                         </td>
                                     </tr>
                                     <tr>

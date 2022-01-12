@@ -38,7 +38,8 @@ class CrearVenta extends Component
             'nombre'   => $nombre,
             'precio'   => $precio,
             'cantidad' => $cantidad,
-            'total'    => ($cantidad * $precio),
+            'total'    => ($cantidad * $precio), // con descuento,
+            'total_sin_descuento' => ($cantidad * $precio),
             'descuento' => 0, // %
             'descuento_en_pesos' => 0
         ];
@@ -59,8 +60,12 @@ class CrearVenta extends Component
      * @param $index key del array
      */
     public function updateCantidad($index, $cantidad){
+
         $this->productosAgregados[$index]['cantidad'] = (int) $cantidad;
         $this->productosAgregados[$index]['total'] = (int) $cantidad * $this->productosAgregados[$index]['precio'];
+
+        $descuento = $this->productosAgregados[$index]['descuento'];
+        $this->updateDescuento($index, $descuento);
     }
 
     /**
@@ -71,9 +76,10 @@ class CrearVenta extends Component
     public function updateDescuento($index, $descuento){
 
         $this->productosAgregados[$index]['total'] = $this->productosAgregados[$index]['cantidad'] * $this->productosAgregados[$index]['precio'];
+        $this->productosAgregados[$index]['total_sin_descuento'] = $this->productosAgregados[$index]['total'];
 
         $this->productosAgregados[$index]['descuento'] = (int) $descuento; // en %
-        $descuento = $this->productosAgregados[$index]['total'] * ($descuento / 100); 
+        $descuento = $this->productosAgregados[$index]['total'] * ($descuento / 100); // en pesos
         $this->productosAgregados[$index]['total'] = $this->productosAgregados[$index]['total'] - $descuento;
         $this->productosAgregados[$index]['descuento_en_pesos'] = $descuento;
     }
