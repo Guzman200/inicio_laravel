@@ -14,7 +14,7 @@ class CrearVenta extends Component
     public $search = "";
     public $productosAgregados = []; // Los productos agregados a la compra
 
-    protected $listeners = ['updateCantidad'];
+    protected $listeners = ['updateCantidad','updateDescuento'];
 
     public function render()
     {
@@ -38,7 +38,8 @@ class CrearVenta extends Component
             'nombre'   => $nombre,
             'precio'   => $precio,
             'cantidad' => $cantidad,
-            'total'    => ($cantidad * $precio)
+            'total'    => ($cantidad * $precio),
+            'descuento' => 0
         ];
         
     }
@@ -59,7 +60,20 @@ class CrearVenta extends Component
     public function updateCantidad($index, $cantidad){
         $this->productosAgregados[$index]['cantidad'] = (int) $cantidad;
         $this->productosAgregados[$index]['total'] = (int) $cantidad * $this->productosAgregados[$index]['precio'];
-        //dd($this->productosAgregados);
+    }
+
+    /**
+     * Modificar el descuento del producto
+     * 
+     * @param $index key del array
+     */
+    public function updateDescuento($index, $descuento){
+
+        $this->productosAgregados[$index]['total'] = $this->productosAgregados[$index]['cantidad'] * $this->productosAgregados[$index]['precio'];
+
+        $this->productosAgregados[$index]['descuento'] = (int) $descuento; // en %
+        $descuento = $this->productosAgregados[$index]['total'] * ($descuento / 100); 
+        $this->productosAgregados[$index]['total'] = $this->productosAgregados[$index]['total'] - $descuento;
     }
 
 

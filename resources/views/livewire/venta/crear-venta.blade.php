@@ -31,16 +31,17 @@
             </div>
         </div>
 
-        {{-- BUSCADOR Y TABLA DE PRODUCTO AGREGADOS A LA VENTA--}}
+        {{-- BUSCADOR Y TABLA DE PRODUCTO AGREGADOS A LA VENTA --}}
         <div class="card">
             <div class="card-body">
-                {{-- BUSCADOR DE PRODUCTOS--}}
+                {{-- BUSCADOR DE PRODUCTOS --}}
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="form-group">
-                            <input wire:model.debounce.500ms="search" type="search" class="form-control" placeholder="Buscar producto">
+                            <input wire:model.debounce.500ms="search" type="search" class="form-control"
+                                placeholder="Buscar producto">
                         </div>
-                        @if(count($arrayProductos) > 0)
+                        @if (count($arrayProductos) > 0)
                             <table class="table table-sm table-hover">
                                 <thead>
                                     <tr>
@@ -50,10 +51,12 @@
                                 <tbody>
                                     @foreach ($arrayProductos as $item)
                                         <tr>
-                                            <td wire:click="agregarProducto('{{$item['codigo']}}','{{$item['nombre']}}', {{$item['precio_venta']}}, 1)" style="cursor: pointer;">{{$item['codigo']}} - {{$item['nombre']}}</td>
+                                            <td wire:click="agregarProducto('{{ $item['codigo'] }}','{{ $item['nombre'] }}', {{ $item['precio_venta'] }}, 1)"
+                                                style="cursor: pointer;">{{ $item['codigo'] }} - {{ $item['nombre'] }}
+                                            </td>
                                         </tr>
                                     @endforeach
-                                </ul>
+                                    </ul>
                                 </tbody>
                             </table>
                         @endif
@@ -78,21 +81,29 @@
                                     @foreach ($productosAgregados as $key => $item)
                                         <tr>
                                             <td>
-                                                <button wire:click="eliminarProducto({{$key}})" class="btn btn-sm btn-danger" title="Eliminar producto de la lista">
+                                                <button wire:click="eliminarProducto({{ $key }})"
+                                                    class="btn btn-sm btn-danger" title="Eliminar producto de la lista">
                                                     <i class="fas fa-times"></i>
                                                 </button>
                                             </td>
-                                            <th scope="row">{{$loop->iteration}}</th>
-                                            <td>{{$item['nombre']}}</td>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <td>{{ $item['nombre'] }}</td>
                                             <td>
                                                 <!-- data-render es usado para forzar el render de este input (solo para ese fin) -->
-                                                <input data-render="{{rand()}}" data-cantidad="{{$item['cantidad']}}" data-key="{{$key}}" type="number" value="{{$item['cantidad']}}" class="form-control inputCantidad">
+                                                <input data-render="{{ rand() }}"
+                                                    data-cantidad="{{ $item['cantidad'] }}"
+                                                    data-key="{{ $key }}" type="number"
+                                                    value="{{ $item['cantidad'] }}" class="form-control inputCantidad">
                                             </td>
                                             <td>
-                                                <input type="number" value="0" class="form-control">
+                                                <input data-render="{{ rand() }}"
+                                                    data-descuento="{{ $item['descuento'] }}"
+                                                    data-key="{{ $key }}" type="number"
+                                                    value="{{ $item['descuento'] }}"
+                                                    class="form-control inputDescuento">
                                             </td>
-                                            <td>${{number_format($item['precio'], 2, '.', ',')}}</td>
-                                            <td>${{number_format($item['total'], 2, '.', ',')}}</td>
+                                            <td>${{ number_format($item['precio'], 2, '.', ',') }}</td>
+                                            <td>${{ number_format($item['total'], 2, '.', ',') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -103,7 +114,8 @@
                                         <th class="text-left">
                                             Subtotal
                                         </th>
-                                        <td>${{number_format(array_sum(array_column($productosAgregados, 'total')),2,'.',',')}}</td>
+                                        <td>${{ number_format(array_sum(array_column($productosAgregados, 'total')), 2, '.', ',') }}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="text-left" colspan="4">
@@ -138,7 +150,9 @@
                                         <th class="text-left bg-secondary">
                                             TOTAL
                                         </th>
-                                        <th class="bg-secondary">${{number_format(array_sum(array_column($productosAgregados, 'total')),2,'.',',')}}</th>
+                                        <th class="bg-secondary">
+                                            ${{ number_format(array_sum(array_column($productosAgregados, 'total')), 2, '.', ',') }}
+                                        </th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -149,8 +163,8 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Total de la venta</label>
-                                    <input type="text" class="form-control" placeholder="$0.00" readonly 
-                                        value="${{number_format(array_sum(array_column($productosAgregados, 'total')),2,'.',',')}}">
+                                    <input type="text" class="form-control" placeholder="$0.00" readonly
+                                        value="${{ number_format(array_sum(array_column($productosAgregados, 'total')), 2, '.', ',') }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Total recibo</label>
@@ -184,22 +198,46 @@
         });
 
         /* Para poner el focus en el search de busqueda del select2 */
-        $(document).on('select2:open', () => {  
+        $(document).on('select2:open', () => {
             document.querySelector('.select2-search__field').focus();
         });
 
-        $(document).on('change', '.inputCantidad', function(event){
+        /* Modificando cantiddd de productos */
+        $(document).on('change', '.inputCantidad', function(event) {
 
             let key = $(this).data('key'); // key del producto en el array de producto agregados
             let cantidad_anterior = event.target.getAttribute("data-cantidad");
             let cantidad = event.target.value;
 
-            if(cantidad == "" || cantidad == "0" || cantidad == 0){
+            if (cantidad == "" || cantidad == "0" || cantidad == 0) {
                 Livewire.emit('updateCantidad', key, cantidad_anterior);
                 console.log('Old cantidad');
-            }else{
+            } else {
                 Livewire.emit('updateCantidad', key, cantidad);
                 console.log('New cantidad');
+            }
+        });
+
+        /** Modificando descuento de productos */
+        $(document).on('change', '.inputDescuento', function(event) {
+
+            let key = $(this).data('key'); // key del producto en el array de producto agregados
+            let descuento_anterior = event.target.getAttribute("data-descuento");
+            let descuento = event.target.value;
+
+            if (descuento == "" || descuento == undefined) {
+                Livewire.emit('updateDescuento', key, descuento_anterior);
+                console.log('Old descuento');
+            } else {
+
+                if(Number(descuento) >= 0 && Number(descuento) <= 100){
+                    Livewire.emit('updateDescuento', key, descuento);
+                    console.log('New descuento');
+                }else{
+                    Livewire.emit('updateDescuento', key, descuento_anterior);
+                    console.log('Old descuento');
+                }
+                
             }
         });
 
