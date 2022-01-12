@@ -39,7 +39,8 @@ class CrearVenta extends Component
             'precio'   => $precio,
             'cantidad' => $cantidad,
             'total'    => ($cantidad * $precio),
-            'descuento' => 0
+            'descuento' => 0, // %
+            'descuento_en_pesos' => 0
         ];
         
     }
@@ -74,6 +75,7 @@ class CrearVenta extends Component
         $this->productosAgregados[$index]['descuento'] = (int) $descuento; // en %
         $descuento = $this->productosAgregados[$index]['total'] * ($descuento / 100); 
         $this->productosAgregados[$index]['total'] = $this->productosAgregados[$index]['total'] - $descuento;
+        $this->productosAgregados[$index]['descuento_en_pesos'] = $descuento;
     }
 
 

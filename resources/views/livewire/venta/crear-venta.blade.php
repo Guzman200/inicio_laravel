@@ -124,7 +124,7 @@
                                             Descuento
                                         </th>
                                         <td>
-                                            0
+                                            ${{ number_format(array_sum(array_column($productosAgregados, 'descuento_en_pesos')), 2, '.', ',') }}
                                         </td>
                                     </tr>
                                     <!--<tr>
